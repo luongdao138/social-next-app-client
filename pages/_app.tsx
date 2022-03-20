@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import PageWithLayout from 'constants/page';
+import storeWrapper from 'store';
 
 type Props = AppProps & {
   Component: PageWithLayout;
@@ -11,4 +12,4 @@ function MyApp({ Component, pageProps }: Props) {
   return <Component {...pageProps} />;
 }
 
-export default MyApp;
+export default storeWrapper.withRedux(MyApp);
