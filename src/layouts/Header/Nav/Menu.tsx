@@ -8,7 +8,7 @@ const Menu = () => {
 
   return (
     <div
-      className='absolute right-0 top-full shadow-md border border-solid border-neutral-300 rounded bg-white py-2'
+      className='absolute right-0 top-full shadow-md border border-solid border-neutral-300 rounded bg-white py-2 z-10'
       style={{ minWidth: '150px' }}
     >
       <Link href={LSRoutes.PROFILE_DETAIL.replace(/:id/gi, '1')}>

@@ -6,7 +6,7 @@ interface Props {
 
 const MainLayout: React.FC<Props> = ({ children }) => {
   return (
-    <div className='w-full max-w-6xl mx-auto'>
+    <div className='w-full mx-auto max-w-6xl'>
       <Header />
       {children}
     </div>
