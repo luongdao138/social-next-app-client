@@ -2,7 +2,7 @@ import MainLayout from 'layouts/MainLayout';
 import { NextPage } from 'next';
 
 type PageWithMainLayout = NextPage & {
-  Layout: typeof MainLayout;
+  Layout?: typeof MainLayout;
 };
 
 type PageWithLayout = PageWithMainLayout;

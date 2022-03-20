@@ -8,6 +8,7 @@ import LSHead from 'components/LSHead';
 import { useStore } from 'react-redux';
 import { StoreType } from 'store/store';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 
 type Props = AppProps & {
   Component: PageWithLayout;
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }: Props) {
   return (
     <>
       <LSHead title={pageProps.title || 'L-Network'} />
+      <Script src='https://kit.fontawesome.com/a076d05399.js' />
       <Layout>
         <Component {...pageProps} />
       </Layout>
