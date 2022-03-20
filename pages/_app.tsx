@@ -7,6 +7,7 @@ import { applyInterceptor } from 'services/interceptor';
 import LSHead from 'components/LSHead';
 import { useStore } from 'react-redux';
 import { StoreType } from 'store/store';
+import { useRouter } from 'next/router';
 
 type Props = AppProps & {
   Component: PageWithLayout;
@@ -14,10 +15,29 @@ type Props = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: Props) {
+  // loading state when users navigate between pages
+  const [loader, setLoader] = React.useState<boolean>(false);
   const store: StoreType = useStore();
+  const router = useRouter();
 
   const Layout = Component.Layout ?? React.Fragment;
   applyInterceptor(store);
+
+  React.useEffect(() => {
+    const handleRouteChange = () => {
+      setLoader(false);
+    };
+
+    router.events.on('routeChangeStart', () => {
+      setLoader(true);
+    });
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router]);
 
   return (
     <>
