@@ -7,6 +7,8 @@ import { LSRoutes } from 'constants/route.constant';
 import Menu from './Menu';
 import Avatar from 'components/Avatar';
 import { useRouter } from 'next/router';
+import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { MEDIA_QUERY } from 'constants/mediaQuery.constant';
 
 interface NavIconProps {
   icon: React.ReactNode;
@@ -18,7 +20,7 @@ const NavIcon: React.FC<NavIconProps> = ({ icon, url, isActive = false }) => {
   return (
     <Link href={url}>
       <a
-        className={`transition-all duration-200 text-3xl ${
+        className={`transition-all duration-200 text-2xl sm:text-3xl ${
           isActive ? '' : 'opacity-30 hover:opacity-50'
         }`}
       >
@@ -35,9 +37,11 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ toggle, open }) => {
   const router = useRouter();
+  const matchesSm = useMediaQuery(MEDIA_QUERY.sm);
+  console.log(matchesSm);
 
   return (
-    <div className='flex items-center gap-6'>
+    <div className='flex -mb-2 sm:mb-0 justify-between sm:justify-start items-center gap-6'>
       <NavIcon icon={<MdHome />} url={LSRoutes.HOME} isActive={router.pathname === LSRoutes.HOME} />
       <NavIcon
         icon={<MdNearMe />}
@@ -50,7 +54,7 @@ const Nav: React.FC<NavProps> = ({ toggle, open }) => {
         isActive={router.pathname === LSRoutes.DISCOVER}
       />
       <div>
-        <MdFavorite className='cursor-pointer transition-all duration-200 text-3xl opacity-50 hover:opacity-70' />
+        <MdFavorite className='cursor-pointer transition-all duration-200 text-2xl sm:text-3xl opacity-50 hover:opacity-70' />
       </div>
       <div className='relative'>
         <div
@@ -58,7 +62,7 @@ const Nav: React.FC<NavProps> = ({ toggle, open }) => {
           onClick={() => !open && toggle()}
         >
           <Avatar
-            size={40}
+            size={matchesSm ? 40 : 30}
             src='https://images.unsplash.com/photo-1647627573078-d8f5b48ab85a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60'
             isLink={false}
           />
