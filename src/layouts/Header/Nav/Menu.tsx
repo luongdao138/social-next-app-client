@@ -2,7 +2,11 @@ import { LSRoutes } from 'constants/route.constant';
 import Link from 'next/link';
 import React from 'react';
 
-const Menu = () => {
+interface MenuProps {
+  toggle: () => void;
+}
+
+const Menu: React.FC<MenuProps> = ({ toggle }) => {
   const itemClassName =
     'block px-4 py-1 transition-all duration-200 hover:bg-gray-100 cursor-pointer';
 

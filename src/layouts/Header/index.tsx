@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Nav from './Nav';
 import Search from './Search';
 
 const Header = () => {
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+
+  const handleToggle = () => {
+    setOpenMenu((prev) => !prev);
+  };
+
   return (
     <div className='w-full'>
       <div
@@ -13,7 +19,7 @@ const Header = () => {
           <h1 className='text-3xl uppercase font-semibold'>L-Network</h1>
         </div>
         <Search />
-        <Nav />
+        <Nav open={openMenu} toggle={handleToggle} />
       </div>
     </div>
   );
