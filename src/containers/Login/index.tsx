@@ -3,26 +3,32 @@ import LSInput from 'components/Input';
 import { LSRoutes } from 'constants/route.constant';
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { UserLoginParams } from 'services/auth.service';
-import * as Yup from 'yup';
+import { loginValidationSchema } from 'utils/validation';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 const initialValues: UserLoginParams = {
   email: '',
   password: '',
 };
 
-const validationSchema = Yup.object({
-  email: Yup.string().email('Email is not valid!').required('Email is required!'),
-  password: Yup.string()
-    .required('Password is required!')
-    .min(6, 'Password must be between 6 and 30 characters!'),
-});
-
 const LoginContainer: React.FC = () => {
+  const [showPw, setShowPw] = useState(false);
+
   const handleSubmit = (values: UserLoginParams) => {
     console.log(values);
   };
+
+  const toggleShowPw = () => {
+    setShowPw((prev) => !prev);
+  };
+
+  const showPwIcon = showPw ? (
+    <MdVisibility onClick={toggleShowPw} />
+  ) : (
+    <MdVisibilityOff onClick={toggleShowPw} />
+  );
 
   return (
     <div className='bg-neutral-100 w-full h-screen flex items-center justify-center'>
@@ -30,7 +36,7 @@ const LoginContainer: React.FC = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+          validationSchema={loginValidationSchema}
         >
           {(formik) => (
             <Form>
@@ -41,7 +47,9 @@ const LoginContainer: React.FC = () => {
                   name='password'
                   placeholder='Enter your password'
                   label='Password'
-                  type='password'
+                  type={showPw ? 'text' : 'password'}
+                  icon={showPwIcon}
+                  position='end'
                 />
               </div>
               <ButtonPrimary
@@ -59,7 +67,6 @@ const LoginContainer: React.FC = () => {
                   <a className='ml-2 text-red-600 hover:underline'>Register now</a>
                 </Link>
               </span>
-              {/* {JSON.stringify(formik.values)} */}
             </Form>
           )}
         </Formik>
