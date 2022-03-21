@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
-    "@types/react-lazy-load-image-component": "^1.5.2",
     "axios": "^0.26.1",
+    "formik": "^2.2.9",
     "moment": "^2.29.1",
     "next": "12.1.0",
     "next-redux-wrapper": "^7.0.5",
@@ -19,11 +19,13 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-lazy-load-image-component": "^1.5.1",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
     "@types/react": "17.0.41",
+    "@types/react-lazy-load-image-component": "^1.5.2",
     "autoprefixer": "^10.4.4",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",

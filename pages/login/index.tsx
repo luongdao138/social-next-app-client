@@ -1,9 +1,10 @@
 import PageWithLayout from 'constants/page';
+import LoginContainer from 'containers/Login';
 import AuthenticationLayout from 'layouts/AuthenticationLayout';
 import React from 'react';
 
 const LoginPage: PageWithLayout = () => {
-  return <div>LoginPage</div>;
+  return <LoginContainer />;
 };
 
 LoginPage.Layout = AuthenticationLayout;
