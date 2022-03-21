@@ -7,9 +7,10 @@ import classes from './Toast.module.css';
 interface Props {
   toast: Toast;
   removeToast: () => void;
+  containerPosition: string;
 }
 
-const Toast: React.FC<Props> = ({ toast, removeToast }) => {
+const Toast: React.FC<Props> = ({ toast, removeToast, containerPosition }) => {
   const getClassName = () => {
     switch (toast.severity) {
       case 'success':
@@ -44,8 +45,8 @@ const Toast: React.FC<Props> = ({ toast, removeToast }) => {
 
   return (
     <div
-      className={`${
-        classes.toast
+      className={`${classes.toast} ${
+        classes[containerPosition]
       } flex items-center justify-between gap-4 mb-3 p-4 shadow-md rounded-md w-96 text-neutral-100  ${getClassName()}`}
     >
       <span className='text-xl'>{renderIcon()}</span>

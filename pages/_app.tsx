@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }: Props) {
       <LSHead title={pageProps.title || 'L-Network'} />
       <Script src='https://kit.fontawesome.com/a076d05399.js' />
       <FullScreenLoader open={loader} />
-      <ToastContainer />
+      <ToastContainer position='top-right' autoClose autoCloseTime={2000} />
       <Layout>
         <Component {...pageProps} />
       </Layout>

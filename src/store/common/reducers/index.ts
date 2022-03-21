@@ -16,28 +16,7 @@ interface StateType {
 }
 
 const intialState: StateType = {
-  toasts: [
-    {
-      id: '1',
-      message: 'This is a success message from Luong',
-      severity: 'success',
-    },
-    {
-      id: '2',
-      message: 'This is an error message from Luong',
-      severity: 'error',
-    },
-    {
-      id: '3',
-      message: 'This is an info message from Luong',
-      severity: 'info',
-    },
-    {
-      id: '4',
-      message: 'This is a warning message from Luong',
-      severity: 'warning',
-    },
-  ],
+  toasts: [],
 };
 
 const commonReducers = createReducer(intialState, (builder) => {
