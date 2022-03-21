@@ -1,0 +1,47 @@
+.toast.top-right,
+.toast.bottom-right {
+  animation: slideInRight 0.75s;
+}
+
+.toast.top-left,
+.toast.bottom-left {
+  animation: slideInLeft 0.75s;
+}
+
+.toast:hover {
+  transition: 0.2s;
+  transform: scale(0.95);
+  box-shadow: 0px 0px 3px gray;
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  25% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-15px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

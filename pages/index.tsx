@@ -1,15 +1,60 @@
 import PageWithLayout from 'constants/page';
 import MainLayout from 'layouts/MainLayout';
 import Image from 'next/image';
+import useToast from 'utils/hooks/useToast';
 import styles from '../styles/Home.module.css';
 
 const HomePage: PageWithLayout = () => {
+  const { addToast } = useToast();
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
+
+        <div>
+          <button
+            onClick={() => {
+              addToast({
+                message: 'This is a success toast from Luong',
+                severity: 'success',
+              });
+            }}
+          >
+            Toast success
+          </button>
+          <button
+            onClick={() => {
+              addToast({
+                message: 'This is a error toast from Luong',
+                severity: 'error',
+              });
+            }}
+          >
+            Toast error
+          </button>
+          <button
+            onClick={() => {
+              addToast({
+                message: 'This is a warning from Luong',
+                severity: 'warning',
+              });
+            }}
+          >
+            Toast warning
+          </button>
+          <button
+            onClick={() => {
+              addToast({
+                message: 'This is a info toast from Luong',
+                severity: 'info',
+              });
+            }}
+          >
+            Toast info
+          </button>
+        </div>
 
         <p className='text-2xl my-4'>
           Get started by editing <code className={styles.code}>pages/index.tsx</code>
