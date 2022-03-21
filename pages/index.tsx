@@ -1,8 +1,9 @@
-import type { NextPage } from 'next';
+import PageWithLayout from 'constants/page';
+import MainLayout from 'layouts/MainLayout';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
-const Home: NextPage = () => {
+const HomePage: PageWithLayout = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -56,4 +57,6 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+HomePage.Layout = MainLayout;
+
+export default HomePage;
