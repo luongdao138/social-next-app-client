@@ -38,7 +38,6 @@ interface NavProps {
 const Nav: React.FC<NavProps> = ({ toggle, open }) => {
   const router = useRouter();
   const matchesSm = useMediaQuery(MEDIA_QUERY.sm);
-  console.log(matchesSm);
 
   return (
     <div className='flex -mb-2 sm:mb-0 justify-between sm:justify-start items-center gap-6'>
