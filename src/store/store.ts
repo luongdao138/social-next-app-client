@@ -1,8 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducer';
-import { createWrapper } from 'next-redux-wrapper';
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-import storage from './storage';
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 const makeStore = () => {
   const isServer = typeof window === 'undefined';
@@ -19,6 +17,9 @@ const makeStore = () => {
     });
   }
 
+  const { persistReducer } = require('redux-persist');
+  const storage = require('redux-persist/lib/storage').default;
+
   const persistConfig = {
     key: 'auth',
     whitelist: ['auth'],
@@ -34,13 +35,10 @@ const makeStore = () => {
         },
       }),
   });
-
   return store;
 };
-
-const storeWrapper = createWrapper(makeStore);
 
 export type StoreType = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<StoreType['getState']>;
 export type AppDispatch = StoreType['dispatch'];
-export default storeWrapper;
+export default makeStore;
