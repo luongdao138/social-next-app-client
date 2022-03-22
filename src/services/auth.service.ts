@@ -17,6 +17,7 @@ export interface UserAuth {
   mobile?: string;
   followers: string[];
   following: string[];
+  verified?: boolean;
 }
 
 export interface UserLoginParams {
@@ -40,9 +41,7 @@ export interface UserLoginReponse {
 }
 export interface UserResgisterReponse {
   msg: string;
-  access_token: string;
   user: UserAuth;
-  refresh_token: string;
 }
 
 export const loginByEmail = async (params: UserLoginParams): Promise<UserLoginReponse> => {

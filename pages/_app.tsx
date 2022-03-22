@@ -45,12 +45,16 @@ function MyApp({ Component, pageProps }: Props) {
     };
   }, [router]);
 
+  const persistor = persistStore(store, {}, function () {
+    persistor.persist();
+  });
+
   return (
     <>
       <LSHead title={pageProps.title || 'L-Network'} />
       <Script src='https://kit.fontawesome.com/a076d05399.js' />
       <Provider store={store}>
-        <PersistGate persistor={persistStore(store)}>
+        <PersistGate loading={<FullScreenLoader open />} persistor={persistor}>
           <FullScreenLoader open={loader} />
           <ToastContainer position='top-right' autoClose autoCloseTime={2000} />
           <Layout>

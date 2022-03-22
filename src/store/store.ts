@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducer';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistReducer } from 'redux-persist';
+import storage from './storage';
 
 const makeStore = () => {
   const isServer = typeof window === 'undefined';
@@ -18,7 +19,7 @@ const makeStore = () => {
   }
 
   // const { persistReducer } = require('redux-persist');
-  const storage = require('redux-persist/lib/storage').default;
+  // const storage = require('redux-persist/lib/storage').default;
 
   const persistConfig = {
     key: 'auth',
