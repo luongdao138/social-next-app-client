@@ -28,7 +28,7 @@ const useRegisterByEmail = () => {
   useEffect(() => {
     if (meta.loaded) {
       resetMeta();
-      router.push(LSRoutes.REGISTER_CONFIRM, undefined, { shallow: true });
+      router.push(LSRoutes.REGISTER_SUCCESS, undefined, { shallow: true });
       const timeoutId = setTimeout(() => {
         addToast({ message: 'Verify your email to complete registration!', severity: 'success' });
       }, 1000);

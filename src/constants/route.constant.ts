@@ -6,4 +6,5 @@ export const LSRoutes = {
   DISCOVER: '/discover',
   PROFILE_DETAIL: '/profile/:id',
   REGISTER_CONFIRM: '/register/confirm',
+  REGISTER_SUCCESS: '/register/success',
 };

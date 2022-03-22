@@ -1,7 +1,14 @@
+import PageWithLayout from 'constants/page';
 import ConfirmRegisterContainer from 'containers/ConfirmRegister';
-import React from 'react';
+import useRegisterAuth from 'utils/hooks/useRegisterAuth';
 
-const ConfirmEmailPage = () => {
+const ConfirmEmailPage: PageWithLayout = () => {
+  const { render } = useRegisterAuth();
+
+  if (!render) {
+    return <></>;
+  }
+
   return <ConfirmRegisterContainer />;
 };
 
