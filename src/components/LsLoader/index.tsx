@@ -4,7 +4,7 @@ interface Props {
   size?: number;
 }
 
-const EsLoader: React.FC<Props> = ({ size = 34 }) => {
+const LSLoader: React.FC<Props> = ({ size = 34 }) => {
   return (
     <svg
       data-name='LV1 / ic / loading'
@@ -25,4 +25,4 @@ const EsLoader: React.FC<Props> = ({ size = 34 }) => {
   );
 };
 
-export default EsLoader;
+export default LSLoader;

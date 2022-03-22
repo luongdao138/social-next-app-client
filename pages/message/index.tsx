@@ -3,9 +3,7 @@ import MainLayout from 'layouts/MainLayout';
 import React from 'react';
 
 const MessagePage: PageWithLayout = () => {
-  return <div>MessagePage</div>;
+  return <MainLayout loginRequired>MessagePage</MainLayout>;
 };
-
-MessagePage.Layout = MainLayout;
 
 export default MessagePage;

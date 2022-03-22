@@ -1,4 +1,4 @@
-import EsLoader from 'components/LsLoader';
+import LSLoader from 'components/LsLoader';
 import React from 'react';
 import useLockScreen from 'utils/hooks/useLockScreen';
 // import ReactDOM from 'react-dom'
@@ -16,7 +16,7 @@ const FullScreenLoader: React.FC<Props> = ({ open }) => {
 
   return (
     <div className='fixed z-50 bg-black opacity-60 inset-0 flex items-center justify-center'>
-      <EsLoader />
+      <LSLoader />
     </div>
   );
 };

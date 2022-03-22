@@ -1,5 +1,6 @@
 import ButtonPrimary from 'components/Button/ButtonPrimary';
 import LSInput from 'components/Input';
+import LSLoader from 'components/LsLoader';
 import LSSelect from 'components/Select';
 import { LSRoutes } from 'constants/route.constant';
 import { Form, Formik } from 'formik';
@@ -8,10 +9,13 @@ import React, { useState } from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { UserRegisterParams } from 'services/auth.service';
 import { registerValidationSchema } from 'utils/validation';
+import useRegisterByEmail from './useRegisterByEmail';
 
-const initialValues: UserRegisterParams & {
+type RegisterFormState = UserRegisterParams & {
   cfPassword: string;
-} = {
+};
+
+const initialValues: RegisterFormState = {
   email: '',
   password: '',
   fullname: '',
@@ -39,6 +43,8 @@ const RegisterContainer: React.FC = () => {
   const [showPw, setShowPw] = useState<boolean>(false);
   const [showCfPw, setShowCfPw] = useState<boolean>(false);
 
+  const { registerByMail, meta } = useRegisterByEmail();
+
   const toggleShowPw = () => {
     setShowPw((prev) => !prev);
   };
@@ -59,8 +65,9 @@ const RegisterContainer: React.FC = () => {
     <MdVisibilityOff onClick={toggleShowCfPw} />
   );
 
-  const handleSubmit = (values: UserRegisterParams) => {
-    console.log(values);
+  const handleSubmit = (values: RegisterFormState) => {
+    const { cfPassword, ...data } = values;
+    registerByMail(data);
   };
 
   return (
@@ -102,9 +109,9 @@ const RegisterContainer: React.FC = () => {
                 size='sm'
                 fullWidth
                 type='submit'
-                disabled={!formik.isValid}
+                disabled={!formik.isValid || meta.pending}
               >
-                Submit
+                {meta.pending ? <LSLoader size={20} /> : 'Submit'}
               </ButtonPrimary>
               <span className='block mt-3 text-sm sm:text-base'>
                 Already have an account?

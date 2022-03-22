@@ -51,7 +51,7 @@ const Toast: React.FC<Props> = ({ toast, removeToast, containerPosition }) => {
     >
       <span className='text-xl'>{renderIcon()}</span>
       <span>{toast.message}</span>
-      <RiCloseFill className='text-xl cursor-pointer' onClick={removeToast} />
+      <RiCloseFill className='text-xl cursor-pointer ml-2' onClick={removeToast} />
     </div>
   );
 };
