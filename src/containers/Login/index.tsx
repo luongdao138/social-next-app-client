@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { UserLoginParams } from 'services/auth.service';
 import { loginValidationSchema } from 'utils/validation';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import useLoginByEmail from './useLoginByEmail';
+import LSLoader from 'components/LsLoader';
 
 const initialValues: UserLoginParams = {
   email: '',
@@ -15,9 +17,10 @@ const initialValues: UserLoginParams = {
 
 const LoginContainer: React.FC = () => {
   const [showPw, setShowPw] = useState(false);
+  const { loginByEmail, meta, resetMeta, user } = useLoginByEmail();
 
   const handleSubmit = (values: UserLoginParams) => {
-    console.log(values);
+    loginByEmail(values);
   };
 
   const toggleShowPw = () => {
@@ -57,9 +60,9 @@ const LoginContainer: React.FC = () => {
                 size='sm'
                 fullWidth
                 type='submit'
-                disabled={!formik.isValid}
+                disabled={!formik.isValid || meta.pending}
               >
-                Submit
+                {meta.pending ? <LSLoader size={20} /> : 'Submit'}
               </ButtonPrimary>
               <span className='block mt-3 text-sm sm:text-base'>
                 You don&apos;t have a account

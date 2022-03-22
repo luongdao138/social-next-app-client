@@ -4,7 +4,9 @@ import _ from 'lodash';
 
 type StateType = Record<string, Meta>;
 
-const metadataReducer = (state: StateType, action: AnyAction): StateType => {
+const initialState: StateType = {};
+
+const metadataReducer = (state: StateType = initialState, action: AnyAction): StateType => {
   let updated: Meta = {} as Meta;
   const actionType = action.type.split('/').slice(-1)[0];
   const actionName = action.type.replace(`/${actionType}`, '');
@@ -29,6 +31,7 @@ const metadataReducer = (state: StateType, action: AnyAction): StateType => {
         error: true,
         loaded: false,
         pending: false,
+        error_message: action.payload?.msg,
       };
       break;
     case 'clear':

@@ -1,7 +1,8 @@
 export interface Meta {
   pending: boolean;
   loaded: boolean;
-  error: boolean | Record<string, any>;
+  error: boolean;
+  error_message?: string;
 }
 
 export enum METADATA_ACTION_TYPE {
