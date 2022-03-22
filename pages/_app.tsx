@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import FullScreenLoader from 'components/FullScreenLoader';
 import ToastContainer from 'containers/ToastContainer';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 type Props = AppProps & {
   Component: PageWithLayout;
@@ -46,11 +48,13 @@ function MyApp({ Component, pageProps }: Props) {
     <>
       <LSHead title={pageProps.title || 'L-Network'} />
       <Script src='https://kit.fontawesome.com/a076d05399.js' />
-      <FullScreenLoader open={loader} />
-      <ToastContainer position='top-right' autoClose autoCloseTime={2000} />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <PersistGate persistor={persistStore(store)}>
+        <FullScreenLoader open={loader} />
+        <ToastContainer position='top-right' autoClose autoCloseTime={2000} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </PersistGate>
     </>
   );
 }
