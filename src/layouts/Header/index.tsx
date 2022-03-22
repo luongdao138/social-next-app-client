@@ -7,8 +7,6 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [headerRef, { width, height }] = useElementSize();
 
-  console.log({ width, height });
-
   const handleToggle = () => {
     setOpenMenu((prev) => !prev);
   };

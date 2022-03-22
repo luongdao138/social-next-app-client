@@ -36,11 +36,13 @@ export interface UserLoginReponse {
   msg: string;
   access_token: string;
   user: UserAuth;
+  refresh_token: string;
 }
 export interface UserResgisterReponse {
   msg: string;
   access_token: string;
   user: UserAuth;
+  refresh_token: string;
 }
 
 export const loginByEmail = async (params: UserLoginParams): Promise<UserLoginReponse> => {

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AUTH_ACTION_TYPE } from './type';
 import * as services from 'services/auth.service';
 
@@ -33,3 +33,5 @@ export const registerByEmail = createAsyncThunk<
     return rejectWithValue(error.response.data);
   }
 });
+
+export const logout = createAction<void>(AUTH_ACTION_TYPE.LOGOUT);
