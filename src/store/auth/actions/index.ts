@@ -36,33 +36,65 @@ export const registerByEmail = createAsyncThunk<
 
 export const logout = createAction<void>(AUTH_ACTION_TYPE.LOGOUT);
 
-export const verifyEmail = createAsyncThunk<
-  services.VerifyEmailResponse,
-  services.VerifyEmailParams
->(AUTH_ACTION_TYPE.VERIFY_EMAIL, async (params, { rejectWithValue }) => {
-  try {
-    const res = await services.verifyEmail(params);
-    return res;
-  } catch (error: any) {
-    if (!error.response) {
-      throw error;
-    }
+export const verifyEmail = createAsyncThunk<services.AuthResponse, services.AuthParams>(
+  AUTH_ACTION_TYPE.VERIFY_EMAIL,
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await services.verifyEmail(params);
+      return res;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
 
-    return rejectWithValue(error.response.data);
-  }
-});
-
-export const resendVerifyEmail = createAsyncThunk<
-  services.ResendVerifyEmailResponse,
-  services.ResendVerifyEmailParams
->(AUTH_ACTION_TYPE.RESEND_VERIFY_EMAIL, async (params, { rejectWithValue }) => {
-  try {
-    const res = await services.resendVerifyEmail(params);
-    return res;
-  } catch (error: any) {
-    if (!error.response) {
-      throw error;
+      return rejectWithValue(error.response.data);
     }
-    return rejectWithValue(error.response.data);
   }
-});
+);
+
+export const resendVerifyEmail = createAsyncThunk<services.AuthResponse, services.AuthParams>(
+  AUTH_ACTION_TYPE.RESEND_VERIFY_EMAIL,
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await services.resendVerifyEmail(params);
+      return res;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk<services.AuthResponse, services.AuthParams>(
+  AUTH_ACTION_TYPE.FORGOT_PASSWORD,
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await services.forgotPassword(params);
+      return res;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk<services.AuthResponse, services.ResetPasswordParams>(
+  AUTH_ACTION_TYPE.RESET_PASSWORD,
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await services.resetPassword(params);
+      return res;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

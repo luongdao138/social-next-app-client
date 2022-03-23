@@ -14,7 +14,7 @@ const useConfirmEmail = () => {
 
   const router = useRouter();
   const { addToast } = useToast();
-  const { verifyToken } = router.query;
+  const { verifyToken, id } = router.query;
   const dispatch = useAppDispatch();
   const meta = useAppSelector(getVerifyEmailMetadata);
 
@@ -26,10 +26,10 @@ const useConfirmEmail = () => {
   );
 
   useEffect(() => {
-    if (verifyToken) {
-      dispatch(verifyEmail({ token: verifyToken as string }));
+    if (typeof verifyToken === 'string' && typeof id === 'string') {
+      dispatch(verifyEmail({ token: verifyToken as string, user_id: id }));
     }
-  }, [verifyToken, dispatch]);
+  }, [verifyToken, dispatch, id]);
 
   useEffect(() => {
     if (meta.error) {

@@ -43,18 +43,20 @@ export interface UserResgisterReponse {
   msg: string;
   user: UserAuth;
 }
+export interface AuthParams {
+  email?: string;
+  token?: string;
+  user_id?: string;
+}
 
-export interface VerifyEmailParams {
+export interface ResetPasswordParams {
+  user_id: string;
   token: string;
+  new_password: string;
 }
-export interface VerifyEmailResponse {
-  msg: string;
-}
-export interface ResendVerifyEmailParams {
-  email: string;
-}
-export interface ResendVerifyEmailResponse {
-  msg: string;
+
+export interface AuthResponse {
+  msg?: string;
 }
 
 export const loginByEmail = async (params: UserLoginParams): Promise<UserLoginReponse> => {
@@ -69,14 +71,22 @@ export const registerByEmail = async (
   return res.data;
 };
 
-export const verifyEmail = async (params: VerifyEmailParams): Promise<VerifyEmailResponse> => {
+export const verifyEmail = async (params: AuthParams): Promise<AuthResponse> => {
   const res = await api.post(URI.VERIFY, params);
   return res.data;
 };
 
-export const resendVerifyEmail = async (
-  params: ResendVerifyEmailParams
-): Promise<ResendVerifyEmailResponse> => {
+export const resendVerifyEmail = async (params: AuthParams): Promise<AuthResponse> => {
   const res = await api.post(URI.RESEND_VERIFY, params);
+  return res.data;
+};
+
+export const forgotPassword = async (params: AuthParams): Promise<AuthResponse> => {
+  const res = await api.post(URI.FORGOT_PASSWORD, params);
+  return res.data;
+};
+
+export const resetPassword = async (params: ResetPasswordParams): Promise<AuthResponse> => {
+  const res = await api.post(URI.RESET_PASSWORD, params);
   return res.data;
 };

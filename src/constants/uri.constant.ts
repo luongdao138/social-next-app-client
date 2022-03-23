@@ -7,4 +7,6 @@ export const URI = {
   REFRESH: '/auth/refresh',
   VERIFY: '/auth/verify',
   RESEND_VERIFY: '/auth/resendVerify',
+  FORGOT_PASSWORD: '/auth/forgot-password',
+  RESET_PASSWORD: '/auth/reset-password',
 };

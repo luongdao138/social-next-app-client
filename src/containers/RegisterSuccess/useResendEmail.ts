@@ -17,6 +17,7 @@ const useResendEmail = () => {
   const onResendClick = () => {
     if (email) {
       dispatch(resendVerifyEmail({ email }));
+      dispatch(clearMetaData(resendVerifyEmail.typePrefix));
     }
   };
 

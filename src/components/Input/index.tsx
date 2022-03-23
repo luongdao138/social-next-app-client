@@ -7,7 +7,7 @@ type LSInputProps = {
   position?: 'start' | 'end';
 };
 
-const LSInput: React.FC<LSInputProps & FieldHookConfig<string>> = (props) => {
+const LSInputFormik: React.FC<LSInputProps & FieldHookConfig<string>> = (props) => {
   const [field, meta, helpers] = useField(props.name);
   const { icon, position } = props;
 
@@ -26,6 +26,7 @@ const LSInput: React.FC<LSInputProps & FieldHookConfig<string>> = (props) => {
         <input
           {...field}
           placeholder={props.placeholder}
+          id={props.id || props.name}
           className={`outline-none border border-solid ${errorClass}  py-2 px-3 w-full rounded ${iconClass}`}
           type={props.type}
         />
@@ -44,4 +45,4 @@ const LSInput: React.FC<LSInputProps & FieldHookConfig<string>> = (props) => {
   );
 };
 
-export default LSInput;
+export default LSInputFormik;
