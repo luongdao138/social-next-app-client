@@ -5,4 +5,6 @@ export const URI = {
   LOGIN_BY_EMAIL: '/auth/login',
   REGISTER_BY_EMAIL: '/auth/register',
   REFRESH: '/auth/refresh',
+  VERIFY: '/auth/verify',
+  RESEND_VERIFY: '/auth/resendVerify',
 };

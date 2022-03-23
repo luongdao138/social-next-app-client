@@ -35,3 +35,34 @@ export const registerByEmail = createAsyncThunk<
 });
 
 export const logout = createAction<void>(AUTH_ACTION_TYPE.LOGOUT);
+
+export const verifyEmail = createAsyncThunk<
+  services.VerifyEmailResponse,
+  services.VerifyEmailParams
+>(AUTH_ACTION_TYPE.VERIFY_EMAIL, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.verifyEmail(params);
+    return res;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const resendVerifyEmail = createAsyncThunk<
+  services.ResendVerifyEmailResponse,
+  services.ResendVerifyEmailParams
+>(AUTH_ACTION_TYPE.RESEND_VERIFY_EMAIL, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.resendVerifyEmail(params);
+    return res;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});

@@ -13,6 +13,7 @@ const useRegisterAuth = () => {
 
   useEffect(() => {
     if (isRegistered) {
+      console.log('Already registered!');
       router.push(LSRoutes.HOME);
     } else {
       if (!hasEmail) {

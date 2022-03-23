@@ -4,7 +4,6 @@ import useRegisterAuth from 'utils/hooks/useRegisterAuth';
 
 const ConfirmEmailPage: PageWithLayout = () => {
   const { render } = useRegisterAuth();
-
   if (!render) {
     return <></>;
   }

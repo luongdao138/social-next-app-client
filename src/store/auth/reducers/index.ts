@@ -25,6 +25,9 @@ const authReducer = createReducer(initialState, (builder) => {
       state.access_token = undefined;
       state.refresh_token = undefined;
     });
+  // .addCase(actions.verifyEmail.fulfilled, (state, action) => {
+  //   state.user = undefined;
+  // });
 });
 
 export default authReducer;

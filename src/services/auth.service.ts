@@ -44,6 +44,19 @@ export interface UserResgisterReponse {
   user: UserAuth;
 }
 
+export interface VerifyEmailParams {
+  token: string;
+}
+export interface VerifyEmailResponse {
+  msg: string;
+}
+export interface ResendVerifyEmailParams {
+  email: string;
+}
+export interface ResendVerifyEmailResponse {
+  msg: string;
+}
+
 export const loginByEmail = async (params: UserLoginParams): Promise<UserLoginReponse> => {
   const res = await api.post<UserLoginReponse>(URI.LOGIN_BY_EMAIL, params);
   return res.data;
@@ -53,5 +66,17 @@ export const registerByEmail = async (
   params: UserRegisterParams
 ): Promise<UserResgisterReponse> => {
   const res = await api.post<UserResgisterReponse>(URI.REGISTER_BY_EMAIL, params);
+  return res.data;
+};
+
+export const verifyEmail = async (params: VerifyEmailParams): Promise<VerifyEmailResponse> => {
+  const res = await api.post(URI.VERIFY, params);
+  return res.data;
+};
+
+export const resendVerifyEmail = async (
+  params: ResendVerifyEmailParams
+): Promise<ResendVerifyEmailResponse> => {
+  const res = await api.post(URI.RESEND_VERIFY, params);
   return res.data;
 };
