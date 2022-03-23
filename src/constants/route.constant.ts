@@ -7,4 +7,5 @@ export const LSRoutes = {
   PROFILE_DETAIL: '/profile/:id',
   REGISTER_CONFIRM: '/register/confirm',
   REGISTER_SUCCESS: '/register/success',
+  FORGOT_PASSWORD: '/forgot-password',
 };

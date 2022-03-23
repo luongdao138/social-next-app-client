@@ -55,6 +55,11 @@ const LoginContainer: React.FC = () => {
                   position='end'
                 />
               </div>
+              <p className='text-right -mt-3 mb-5 text-blue-500 text-sm font-medium'>
+                <Link href={LSRoutes.FORGOT_PASSWORD}>
+                  <a className='hover:underline'>Forgot your password?</a>
+                </Link>
+              </p>
               <ButtonPrimary
                 className={`${formik.isValid ? 'bg-neutral-700' : 'bg-neutral-500'}`}
                 size='sm'
