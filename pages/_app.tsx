@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }: Props) {
       <Provider store={store}>
         <PersistGate loading={<FullScreenLoader open />} persistor={persistor}>
           <FullScreenLoader open={loader} />
-          <ToastContainer position='top-right' autoClose autoCloseTime={2000} />
+          <ToastContainer position='top-right' autoClose autoCloseTime={3000} />
           <Layout>
             <Component {...pageProps} />
           </Layout>

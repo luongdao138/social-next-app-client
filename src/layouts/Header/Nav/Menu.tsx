@@ -3,7 +3,8 @@ import Link from 'next/link';
 import React from 'react';
 import { useRef } from 'react';
 import { logout } from 'store/auth/actions';
-import { useAppDispatch } from 'store/hooks';
+import { getUserAuth } from 'store/auth/selectors';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import useClickOutside from 'utils/hooks/useClickOutside';
 
 interface MenuProps {
@@ -12,6 +13,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ toggle }) => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(getUserAuth);
   const menuRef = useRef<HTMLDivElement>(null);
   useClickOutside({
     ref: menuRef,
@@ -32,7 +34,7 @@ const Menu: React.FC<MenuProps> = ({ toggle }) => {
       style={{ minWidth: '150px' }}
       ref={menuRef}
     >
-      <Link href={LSRoutes.PROFILE_DETAIL.replace(/:id/gi, '1')}>
+      <Link href={LSRoutes.PROFILE_DETAIL.replace(/:id/gi, user?._id || '')}>
         <a className={itemClassName}>Profile</a>
       </Link>
       <span className={itemClassName}>Dark mode</span>

@@ -4,29 +4,26 @@ import React, { CSSProperties } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface Props {
+  [key: string]: any;
   src: string;
   alt?: string;
   size: number;
-  isLink?: boolean;
-  href?: string;
-  style?: CSSProperties;
 }
 
 const Avatar: React.FC<Props> = ({
-  style,
-  src,
-  alt = '',
   size,
   isLink = true,
   href = LSRoutes.HOME,
+  className = '',
+  clickHandler,
+  ...rest
 }) => {
   const image = (
     <LazyLoadImage
-      alt={alt}
-      src={src}
       width={size}
-      className='rounded-full aspect-square object-cover'
-      style={style}
+      className={`rounded-full aspect-square object-cover overflow-hidden ${className}`}
+      onClick={() => clickHandler && clickHandler()}
+      {...rest}
     />
   );
 

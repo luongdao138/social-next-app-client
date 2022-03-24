@@ -1,3 +1,5 @@
+import { LSRoutes } from 'constants/route.constant';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import useElementSize from 'utils/hooks/useElementSize';
 import Nav from './Nav';
@@ -18,7 +20,9 @@ const Header = () => {
         ref={headerRef}
       >
         <div className='hidden md:block'>
-          <h1 className='text-3xl uppercase font-semibold'>L-Network</h1>
+          <h1 className='text-3xl uppercase font-semibold'>
+            <Link href={LSRoutes.HOME}>L-Network</Link>
+          </h1>
         </div>
         <Search />
         <Nav open={openMenu} toggle={handleToggle} />
