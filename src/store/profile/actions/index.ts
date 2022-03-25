@@ -19,3 +19,19 @@ export const getUserProfile = createAsyncThunk<services.UserProfileResponse, str
 );
 
 export const clearUserProfile = createAction<void>(PROFILE_ACTION_TYPE.CLEAR_USER_PROFILE);
+
+export const updateUserProfile = createAsyncThunk<
+  services.UserProfileResponse,
+  services.EditProfileParams
+>(PROFILE_ACTION_TYPE.UPDATE_USER_PROFILE, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.editUserProfile(params);
+    return res;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error);
+  }
+});

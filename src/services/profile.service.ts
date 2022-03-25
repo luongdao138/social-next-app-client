@@ -19,8 +19,17 @@ export interface UserProfile {
   is_following?: boolean;
   is_followed?: boolean;
   follower_count?: number;
-  following_count?: string;
+  following_count?: number;
   is_own?: boolean;
+}
+
+export interface EditProfileParams {
+  fullname?: string;
+  mobile?: string;
+  address?: string;
+  website?: string;
+  story?: string;
+  gender?: UserGender;
 }
 
 export interface UserProfileResponse {
@@ -30,5 +39,10 @@ export interface UserProfileResponse {
 // call apis
 export const getUserProfile = async (param?: string): Promise<UserProfileResponse> => {
   const res = await api.get<UserProfileResponse>(`${URI.GET_USER_PROFILE}/${param ?? ''}`);
+  return res.data;
+};
+
+export const editUserProfile = async (params: EditProfileParams): Promise<UserProfileResponse> => {
+  const res = await api.put<UserProfileResponse>(URI.UPDATE_USER_PROFILE, params);
   return res.data;
 };

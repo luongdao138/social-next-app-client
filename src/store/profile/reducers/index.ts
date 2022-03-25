@@ -15,6 +15,9 @@ const profileReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.clearUserProfile, (state) => {
       state.data = undefined;
+    })
+    .addCase(actions.updateUserProfile.fulfilled, (state, action) => {
+      state.data = { ...state.data, ...action.payload.user };
     });
 });
 

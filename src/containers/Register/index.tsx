@@ -24,7 +24,7 @@ const initialValues: RegisterFormState = {
   cfPassword: '',
 };
 
-const genderOptions = [
+export const genderOptions = [
   {
     label: 'Male',
     value: 'male',

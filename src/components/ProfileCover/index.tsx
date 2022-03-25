@@ -5,9 +5,10 @@ import CoverImageAction from './CoverImageAction';
 
 interface Props {
   avatar: string;
+  is_own?: boolean;
 }
 
-const ProfileCover: React.FC<Props> = ({ avatar }) => {
+const ProfileCover: React.FC<Props> = ({ avatar, is_own }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
@@ -21,6 +22,14 @@ const ProfileCover: React.FC<Props> = ({ avatar }) => {
     }
   };
 
+  if (!is_own) {
+    return (
+      <div className='relative'>
+        <Avatar size={180} src={avatar} isLink={false} style={{ minWidth: 180 }} />
+      </div>
+    );
+  }
+
   return (
     <div className='relative'>
       <Avatar
@@ -30,9 +39,9 @@ const ProfileCover: React.FC<Props> = ({ avatar }) => {
         isLink={false}
         style={{ minWidth: 180 }}
         clickHandler={handleOpenMenu}
-        onMouseDown={(e: MouseEvent) => setIsFocus(true)}
-        onMouseUp={(e: MouseEvent) => setIsFocus(false)}
-        onMouseLeave={(e: MouseEvent) => setIsFocus(false)}
+        onMouseDown={() => setIsFocus(true)}
+        onMouseUp={() => setIsFocus(false)}
+        onMouseLeave={() => setIsFocus(false)}
       />
       <div className='w-10 h-10 flex bg-neutral-600 cursor-pointer rounded-full absolute bottom-0 right-0 -translate-x-2 -translate-y-2 hover:bg-neutral-500 transition-colors'>
         <MdCameraAlt className='m-auto text-white text-2xl' />

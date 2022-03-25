@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiUserCircle } from 'react-icons/bi';
 import { IoMdImages } from 'react-icons/io';
+import { MdDelete } from 'react-icons/md';
 import useClickOutside from 'utils/hooks/useClickOutside';
 import useEventListener from 'utils/hooks/useEventListener';
 
@@ -55,13 +56,14 @@ const CoverImageAction: React.FC<Props> = ({ toggle }) => {
   return (
     <ul
       ref={ref}
-      className={`absolute w-60 p-1 bg-white rounded-md ${
+      className={`absolute w-60 p-2 bg-white rounded-md ${
         offset.left <= 30 ? 'left-0' : 'left-1/2 -translate-x-1/2'
       } z-10 shadow-md border border-solid border-neutral-200`}
       style={{ bottom: `-${offset.bottom - offset.top + 10}px` }}
     >
       <CoverActionItem icon={<BiUserCircle className='text-2xl' />} text='View your avatar' />
       <CoverActionItem icon={<IoMdImages className='text-2xl' />} text='Update your avatar' />
+      <CoverActionItem icon={<MdDelete className='text-2xl' />} text='Remove your avatar' />
     </ul>
   );
 };

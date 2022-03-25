@@ -46,3 +46,10 @@ export const resetPwValidationSchema = Yup.object({
       }
     }),
 });
+
+export const editUserProfileValidationSchema = Yup.object({
+  fullname: Yup.string()
+    .required('Full name is required!')
+    .max(25, 'Full name can not be more than 25 characters!'),
+  story: Yup.string().max(200, 'Story can not be more than 200 characters!'),
+});

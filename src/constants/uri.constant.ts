@@ -13,4 +13,5 @@ export const URI = {
 
   // profile
   GET_USER_PROFILE: '/users/profile',
+  UPDATE_USER_PROFILE: '/users/profile/update',
 };
