@@ -16,9 +16,10 @@ const useUserFollow = (type: 'follower' | 'following') => {
     isFollower ? selectors.getUserFollowersMeta : selectors.getUserFollowingMeta
   );
 
-  const meta = isFollower
+  const createFollowMeta = isFollower
     ? createMetaSelector(actions.getUserFollowers)
     : createMetaSelector(actions.getUserFollowing);
+  const meta = useAppSelector(createFollowMeta);
 
   // actions
   const fetchUsers = isFollower
@@ -37,11 +38,11 @@ const useUserFollow = (type: 'follower' | 'following') => {
       };
 
   const followUser = (params: FollowUserParams) => {
-    dispatch(actions.followUser(params));
+    dispatch(actions.followUserFromList(params));
   };
 
   const unfollowUser = (params: FollowUserParams) => {
-    dispatch(actions.unfollowUser(params));
+    dispatch(actions.unFollowUserFromList(params));
   };
 
   const resetMeta = isFollower

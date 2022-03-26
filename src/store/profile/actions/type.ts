@@ -4,6 +4,8 @@ export enum PROFILE_ACTION_TYPE {
   CLEAR_USER_PROFILE = 'profile/clearUserProfile',
   FOLLOW_USER = 'profile/followUser',
   UNFOLLOW_USER = 'profile/unfollowUser',
+  FOLLOW_USER_FROM_LIST = 'profile/followUserFromList',
+  UNFOLLOW_USER_FROM_LIST = 'profile/unfollowUserFromList',
   GET_USER_FOLLOWERS = 'profile/getFollowers',
   GET_USER_FOLLOWING = 'profile/getFollowing',
   CLEAR_USER_FOLLOWERS = 'profile/clearFollowers',

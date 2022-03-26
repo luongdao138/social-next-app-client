@@ -8,6 +8,8 @@ interface Props {
   src: string;
   alt?: string;
   size: number;
+  isLink?: boolean;
+  href?: string;
 }
 
 const Avatar: React.FC<Props> = ({

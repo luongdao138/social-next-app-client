@@ -18,8 +18,8 @@ export interface UserProfile {
   story?: string;
   is_following?: boolean;
   is_followed?: boolean;
-  follower_count?: number;
-  following_count?: number;
+  follower_count: number;
+  following_count: number;
   is_own?: boolean;
 }
 
@@ -30,6 +30,7 @@ export interface UserFollow {
   avatar?: string;
   is_followed?: boolean;
   is_following?: boolean;
+  is_own?: boolean;
 }
 
 export interface EditProfileParams {
@@ -44,12 +45,13 @@ export interface EditProfileParams {
 
 export interface FollowUserParams {
   user_id: string;
+  is_from_list?: boolean;
   type: 'follow' | 'unfollow';
 }
 
 export interface GetFollowParams {
   page: number;
-  user_id: number;
+  user_id: string;
 }
 
 export interface GetFollowResponse {
