@@ -3,7 +3,8 @@ import ProfileInfoContainer from './ProfileInfo';
 import useUserData from './useUserData';
 
 const ProfileContainer = () => {
-  const { profile, profileMeta } = useUserData();
+  const { profile, profileMeta, uploadAvatar, uploadProgress, isUploading, removeAvatar } =
+    useUserData();
 
   const Loader = () => {
     return (
@@ -19,7 +20,13 @@ const ProfileContainer = () => {
 
   return (
     <div className='max-w-6xl w-full mx-auto px-5 py-6'>
-      <ProfileInfoContainer is_own={!!profile?.is_own} />
+      <ProfileInfoContainer
+        is_own={!!profile?.is_own}
+        uploadAvatar={uploadAvatar}
+        uploadProgress={uploadProgress}
+        isUploading={isUploading}
+        removeAvatar={removeAvatar}
+      />
     </div>
   );
 };

@@ -1,0 +1,13 @@
+.range::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid teal;
+  background-color: teal;
+}
+
+.range::-moz-range-progress {
+  background-color: teal;
+}

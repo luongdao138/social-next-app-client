@@ -11,15 +11,18 @@ interface BoundingRectClient {
   bottom: number;
   right: number;
 }
-
 interface ItemProps {
   icon: React.ReactNode;
   text: string;
+  clickHandler: () => void;
 }
 
-const CoverActionItem: React.FC<ItemProps> = ({ icon, text }) => {
+const CoverActionItem: React.FC<ItemProps> = ({ icon, text, clickHandler }) => {
   return (
-    <li className='flex gap-2 items-center p-2 transition-all duration-300 rounded-md cursor-pointer hover:bg-neutral-100'>
+    <li
+      onClick={clickHandler}
+      className='flex gap-2 items-center p-2 transition-all duration-300 rounded-md cursor-pointer hover:bg-neutral-100'
+    >
       {icon}
       <span className='font-medium text-neutral-800'>{text}</span>
     </li>
@@ -27,10 +30,12 @@ const CoverActionItem: React.FC<ItemProps> = ({ icon, text }) => {
 };
 
 interface Props {
+  openCropper: () => void;
   toggle: () => void;
+  removeAvatar: () => void;
 }
 
-const CoverImageAction: React.FC<Props> = ({ toggle }) => {
+const CoverImageAction: React.FC<Props> = ({ toggle, openCropper, removeAvatar }) => {
   const ref = useRef<HTMLUListElement>(null);
   const [offset, setOffset] = useState<BoundingRectClient>({
     bottom: 0,
@@ -44,6 +49,16 @@ const CoverImageAction: React.FC<Props> = ({ toggle }) => {
       setOffset(ref.current.getBoundingClientRect());
     }
   }, []);
+
+  const handleOpenCropper = () => {
+    openCropper();
+    toggle();
+  };
+
+  const handleRemoveAvatar = () => {
+    removeAvatar();
+    toggle();
+  };
 
   useEffect(() => {
     handleUpdateOffset();
@@ -61,9 +76,21 @@ const CoverImageAction: React.FC<Props> = ({ toggle }) => {
       } z-10 shadow-md border border-solid border-neutral-200`}
       style={{ bottom: `-${offset.bottom - offset.top + 10}px` }}
     >
-      <CoverActionItem icon={<BiUserCircle className='text-2xl' />} text='View your avatar' />
-      <CoverActionItem icon={<IoMdImages className='text-2xl' />} text='Update your avatar' />
-      <CoverActionItem icon={<MdDelete className='text-2xl' />} text='Remove your avatar' />
+      <CoverActionItem
+        clickHandler={() => {}}
+        icon={<BiUserCircle className='text-2xl' />}
+        text='View your avatar'
+      />
+      <CoverActionItem
+        clickHandler={handleOpenCropper}
+        icon={<IoMdImages className='text-2xl' />}
+        text='Update your avatar'
+      />
+      <CoverActionItem
+        clickHandler={handleRemoveAvatar}
+        icon={<MdDelete className='text-2xl' />}
+        text='Remove your avatar'
+      />
     </ul>
   );
 };

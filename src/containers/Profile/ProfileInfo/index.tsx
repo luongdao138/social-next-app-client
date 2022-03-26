@@ -7,14 +7,31 @@ import React, { useCallback, useState } from 'react';
 import { useAppSelector } from 'store/hooks';
 import { getUserProfile } from 'store/profile/selectors';
 import EditProfileForm from './EditProfile';
+import ImageCropper from './ImageCropper';
+import 'react-image-crop/dist/ReactCrop.css';
+import { COMMON } from 'constants/comon';
+import { UploadImageResponse } from 'services/image.service';
 
 interface Props {
   is_own: boolean;
+  uploadAvatar: (file: File, cb?: (res: UploadImageResponse) => void) => void;
+  uploadProgress: number;
+  isUploading?: boolean;
+  removeAvatar: () => void;
 }
 
-const ProfileInfoContainer: React.FC<Props> = ({ is_own }) => {
+const ProfileInfoContainer: React.FC<Props> = ({
+  is_own,
+  uploadProgress,
+  uploadAvatar,
+  isUploading,
+  removeAvatar,
+}) => {
   const profile = useAppSelector(getUserProfile);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [openCropper, setOpenCropper] = useState<boolean>(false);
+
+  const originalImage = profile?.avatar === COMMON.DEFAULT_IMAGE ? undefined : profile?.avatar;
 
   const handleOpenEdit = useCallback(() => {
     setOpenEdit(true);
@@ -24,6 +41,10 @@ const ProfileInfoContainer: React.FC<Props> = ({ is_own }) => {
     setOpenEdit(false);
   }, []);
 
+  const handleOpenCropper = () => {
+    setOpenCropper(true);
+  };
+
   if (!profile) return <></>;
 
   return (
@@ -31,7 +52,22 @@ const ProfileInfoContainer: React.FC<Props> = ({ is_own }) => {
       <LSModal open={openEdit} onClose={handleCloseEdit} onBackdropClose fullWidth maxWidth='xl'>
         <EditProfileForm onClose={handleCloseEdit} />
       </LSModal>
-      <ProfileCover is_own={is_own} avatar={profile.avatar as string} />
+      <ProfileCover
+        openCropper={handleOpenCropper}
+        is_own={is_own}
+        avatar={profile.avatar as string}
+        removeAvatar={removeAvatar}
+      />
+      {is_own && (
+        <ImageCropper
+          open={openCropper}
+          onClose={() => setOpenCropper(false)}
+          originalImage={originalImage}
+          uploadAvatar={uploadAvatar}
+          uploadProgress={uploadProgress}
+          isUploading={isUploading}
+        />
+      )}
       <div className='w-full'>
         <div className='flex flex-col gap-4 items-center md:flex-row md:justify-between'>
           <h1 className='text-4xl  font-medium text-gray-800'>{profile.username}</h1>

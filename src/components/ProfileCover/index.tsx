@@ -6,9 +6,11 @@ import CoverImageAction from './CoverImageAction';
 interface Props {
   avatar: string;
   is_own?: boolean;
+  openCropper: () => void;
+  removeAvatar: () => void;
 }
 
-const ProfileCover: React.FC<Props> = ({ avatar, is_own }) => {
+const ProfileCover: React.FC<Props> = ({ avatar, is_own, openCropper, removeAvatar }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
@@ -43,10 +45,19 @@ const ProfileCover: React.FC<Props> = ({ avatar, is_own }) => {
         onMouseUp={() => setIsFocus(false)}
         onMouseLeave={() => setIsFocus(false)}
       />
-      <div className='w-10 h-10 flex bg-neutral-600 cursor-pointer rounded-full absolute bottom-0 right-0 -translate-x-2 -translate-y-2 hover:bg-neutral-500 transition-colors'>
+      <div
+        className='w-10 h-10 flex bg-neutral-600 cursor-pointer rounded-full absolute bottom-0 right-0 -translate-x-2 -translate-y-2 hover:bg-neutral-500 transition-colors'
+        onClick={openCropper}
+      >
         <MdCameraAlt className='m-auto text-white text-2xl' />
       </div>
-      {open ? <CoverImageAction toggle={handleToggleMenu} /> : null}
+      {open ? (
+        <CoverImageAction
+          removeAvatar={removeAvatar}
+          openCropper={openCropper}
+          toggle={handleToggleMenu}
+        />
+      ) : null}
     </div>
   );
 };

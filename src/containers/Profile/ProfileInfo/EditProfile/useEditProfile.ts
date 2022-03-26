@@ -15,7 +15,7 @@ const useEditProfile = () => {
 
   const clearEditProfileMetadata = useCallback(() => {
     dispatch(clearMetaData(actions.updateUserProfile.typePrefix));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     return () => {

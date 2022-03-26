@@ -30,6 +30,7 @@ export interface EditProfileParams {
   website?: string;
   story?: string;
   gender?: UserGender;
+  avatar?: string;
 }
 
 export interface UserProfileResponse {

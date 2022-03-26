@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AUTH_ACTION_TYPE } from './type';
 import * as services from 'services/auth.service';
+import { UserProfile } from 'services/profile.service';
 
 export const loginByEmail = createAsyncThunk<services.UserLoginReponse, services.UserLoginParams>(
   AUTH_ACTION_TYPE.LOGIN_BY_EMAIL,
@@ -98,3 +99,5 @@ export const resetPassword = createAsyncThunk<services.AuthResponse, services.Re
     }
   }
 );
+
+export const updateProfile = createAction<UserProfile>(AUTH_ACTION_TYPE.UPDATE_PROFILE);

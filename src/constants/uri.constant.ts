@@ -14,4 +14,7 @@ export const URI = {
   // profile
   GET_USER_PROFILE: '/users/profile',
   UPDATE_USER_PROFILE: '/users/profile/update',
+
+  // image
+  IMAGE_UPLOAD: `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
 };

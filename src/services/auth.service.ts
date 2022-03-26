@@ -11,12 +11,12 @@ export interface UserAuth {
   story?: string;
   website?: string;
   address?: string;
-  avatar: string;
+  avatar?: string;
   role?: UserRole;
   gender?: UserGender;
   mobile?: string;
-  followers: string[];
-  following: string[];
+  followers?: string[];
+  following?: string[];
   verified?: boolean;
 }
 
