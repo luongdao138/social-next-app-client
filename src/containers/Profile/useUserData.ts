@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { clearMetaData } from 'store/metadata/actions';
 import { createMetaSelector } from 'store/metadata/selectors';
 import { actions, selectors } from 'store/profile';
-import useToast from 'utils/hooks/useToast';
 import useUploadImage from 'utils/hooks/useUploadImage';
 
 const getUserProfileMeta = createMetaSelector(actions.getUserProfile);
@@ -21,7 +20,6 @@ const useUserData = () => {
     : '';
   const profile = useAppSelector(selectors.getUserProfile);
   const dispatch = useAppDispatch();
-  const { addToast } = useToast();
   const profileMeta = useAppSelector(getUserProfileMeta);
   const { progress, hasError, uploadResult, uploadImage, isUploading } = useUploadImage();
 
@@ -29,8 +27,6 @@ const useUserData = () => {
     uploadImage(file, (res) => {
       dispatch(
         actions.updateUserProfile({
-          fullname: profile?.fullname,
-          story: profile?.story,
           avatar: res.secure_url,
         })
       );
@@ -44,13 +40,21 @@ const useUserData = () => {
   const removeAvatar = () => {
     dispatch(
       actions.updateUserProfile({
-        fullname: profile?.fullname,
-        story: profile?.story,
         avatar: COMMON.DEFAULT_IMAGE,
       })
     );
     if (profile) {
       dispatch(updateProfile({ ...profile, avatar: COMMON.DEFAULT_IMAGE }));
+    }
+  };
+
+  const setStateFollow = () => {
+    if (profile) {
+      if (profile.is_followed) {
+        dispatch(actions.unfollowUser({ type: 'unfollow', user_id }));
+      } else {
+        dispatch(actions.followUser({ type: 'follow', user_id }));
+      }
     }
   };
 
@@ -74,6 +78,7 @@ const useUserData = () => {
     uploadProgress: progress,
     isUploading,
     removeAvatar,
+    setStateFollow,
   };
 };
 

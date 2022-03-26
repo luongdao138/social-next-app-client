@@ -35,3 +35,103 @@ export const updateUserProfile = createAsyncThunk<
     return rejectWithValue(error);
   }
 });
+
+export const followUser = createAsyncThunk<services.FollowUserResponse, services.FollowUserParams>(
+  PROFILE_ACTION_TYPE.FOLLOW_USER,
+  async (params, { rejectWithValue }) => {
+    try {
+      const res = await services.followUser(params);
+      return res;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk<
+  services.UnfollowUserResponse,
+  services.FollowUserParams
+>(PROFILE_ACTION_TYPE.UNFOLLOW_USER, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.unfollowUser(params);
+    return res;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error);
+  }
+});
+
+export const getUserFollowers = createAsyncThunk<
+  services.GetFollowResponse,
+  services.GetFollowParams
+>(PROFILE_ACTION_TYPE.GET_USER_FOLLOWERS, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.getUserFollowers(params);
+    return res;
+  } catch (error: any) {
+    if (!error?.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const getUserFollowing = createAsyncThunk<
+  services.GetFollowResponse,
+  services.GetFollowParams
+>(PROFILE_ACTION_TYPE.GET_USER_FOLLOWING, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.getUserFollowing(params);
+    return res;
+  } catch (error: any) {
+    if (!error?.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const clearUserFollowers = createAction<void>(PROFILE_ACTION_TYPE.CLEAR_USER_FOLLOWERS);
+
+export const clearUserFollowing = createAction<void>(PROFILE_ACTION_TYPE.CLEAR_USER_FOLLOWING);
+
+export const followUserFromList = createAsyncThunk<
+  services.FollowUserResponse,
+  services.FollowUserParams
+>(PROFILE_ACTION_TYPE.FOLLOW_USER_FROM_LIST, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.followUser({ ...params, is_from_list: true });
+    return res;
+  } catch (error: any) {
+    if (!error?.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const unFollowUserFromList = createAsyncThunk<
+  services.UnfollowUserResponse,
+  services.FollowUserParams
+>(PROFILE_ACTION_TYPE.UNFOLLOW_USER_FROM_LIST, async (params, { rejectWithValue }) => {
+  try {
+    const res = await services.unfollowUser({ ...params, is_from_list: true });
+    return res;
+  } catch (error: any) {
+    if (!error?.response) {
+      throw error;
+    }
+
+    return rejectWithValue(error.response.data);
+  }
+});

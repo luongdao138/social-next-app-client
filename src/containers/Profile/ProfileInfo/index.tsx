@@ -18,6 +18,7 @@ interface Props {
   uploadProgress: number;
   isUploading?: boolean;
   removeAvatar: () => void;
+  setStateFollow: () => void;
 }
 
 const ProfileInfoContainer: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const ProfileInfoContainer: React.FC<Props> = ({
   uploadAvatar,
   isUploading,
   removeAvatar,
+  setStateFollow,
 }) => {
   const profile = useAppSelector(getUserProfile);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -74,7 +76,7 @@ const ProfileInfoContainer: React.FC<Props> = ({
           {is_own ? (
             <EditProfileButton onOpenEdit={handleOpenEdit} />
           ) : (
-            <FollowUserButton is_followed={!!profile.is_followed} />
+            <FollowUserButton setStateFollow={setStateFollow} is_followed={!!profile.is_followed} />
           )}
         </div>
         <div

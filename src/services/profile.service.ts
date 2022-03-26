@@ -18,8 +18,18 @@ export interface UserProfile {
   story?: string;
   is_following?: boolean;
   is_followed?: boolean;
-  follower_count?: number;
-  following_count?: number;
+  follower_count: number;
+  following_count: number;
+  is_own?: boolean;
+}
+
+export interface UserFollow {
+  _id: string;
+  username: string;
+  fullname: string;
+  avatar?: string;
+  is_followed?: boolean;
+  is_following?: boolean;
   is_own?: boolean;
 }
 
@@ -33,8 +43,39 @@ export interface EditProfileParams {
   avatar?: string;
 }
 
+export interface FollowUserParams {
+  user_id: string;
+  is_from_list?: boolean;
+  type: 'follow' | 'unfollow';
+}
+
+export interface GetFollowParams {
+  page: number;
+  user_id: string;
+}
+
+export interface GetFollowResponse {
+  meta: PageMeta;
+  data: UserFollow[];
+}
+
+export interface PageMeta {
+  current_page: number;
+  per_page: number;
+  total_count: number;
+  total_pages: number;
+}
+
 export interface UserProfileResponse {
   user: UserProfile;
+}
+
+export interface FollowUserResponse {
+  user: UserFollow;
+}
+
+export interface UnfollowUserResponse {
+  user_id: string;
 }
 
 // call apis
@@ -45,5 +86,25 @@ export const getUserProfile = async (param?: string): Promise<UserProfileRespons
 
 export const editUserProfile = async (params: EditProfileParams): Promise<UserProfileResponse> => {
   const res = await api.put<UserProfileResponse>(URI.UPDATE_USER_PROFILE, params);
+  return res.data;
+};
+
+export const followUser = async (params: FollowUserParams): Promise<FollowUserResponse> => {
+  const res = await api.put<FollowUserResponse>(URI.FOLLOW_USER, params);
+  return res.data;
+};
+
+export const unfollowUser = async (params: FollowUserParams): Promise<UnfollowUserResponse> => {
+  const res = await api.put<UnfollowUserResponse>(URI.UNFOLLOW_USER, params);
+  return res.data;
+};
+
+export const getUserFollowers = async (params: GetFollowParams): Promise<GetFollowResponse> => {
+  const res = await api.post<GetFollowResponse>(URI.GET_USER_FOLLOWERS, params);
+  return res.data;
+};
+
+export const getUserFollowing = async (params: GetFollowParams): Promise<GetFollowResponse> => {
+  const res = await api.post<GetFollowResponse>(URI.GET_USER_FOLLOWING, params);
   return res.data;
 };
