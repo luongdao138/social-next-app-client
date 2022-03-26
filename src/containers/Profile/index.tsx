@@ -3,8 +3,15 @@ import ProfileInfoContainer from './ProfileInfo';
 import useUserData from './useUserData';
 
 const ProfileContainer = () => {
-  const { profile, profileMeta, uploadAvatar, uploadProgress, isUploading, removeAvatar } =
-    useUserData();
+  const {
+    profile,
+    profileMeta,
+    uploadAvatar,
+    uploadProgress,
+    isUploading,
+    removeAvatar,
+    setStateFollow,
+  } = useUserData();
 
   const Loader = () => {
     return (
@@ -26,6 +33,7 @@ const ProfileContainer = () => {
         uploadProgress={uploadProgress}
         isUploading={isUploading}
         removeAvatar={removeAvatar}
+        setStateFollow={setStateFollow}
       />
     </div>
   );

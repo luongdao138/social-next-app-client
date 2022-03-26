@@ -66,6 +66,19 @@ const ImageCropper: React.FC<Props> = ({
     }
   };
 
+  const handleClose = () => {
+    if (imgRef.current) {
+      const { width, height } = imgRef.current;
+      setCrop(centerAspectCrop(width, height, 1));
+      setImgSrc(originalImage);
+      setCompletedCrop(undefined);
+      setScale(1);
+      onClose();
+    } else {
+      onClose();
+    }
+  };
+
   const handleUploadAvatar = async () => {
     if (previewCanvasRef.current) {
       const canvasDataURL = previewCanvasRef.current.toDataURL('image/jpeg');
@@ -77,6 +90,7 @@ const ImageCropper: React.FC<Props> = ({
         uploadAvatar(file, (res) => {
           setImgSrc(res.secure_url);
           setCompletedCrop(undefined);
+          setScale(1);
           onClose();
         });
       }
@@ -96,17 +110,6 @@ const ImageCropper: React.FC<Props> = ({
         setImgSrc(reader.result?.toString() || '');
       });
       reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const handleClose = () => {
-    if (imgRef.current) {
-      const { width, height } = imgRef.current;
-      setCrop(centerAspectCrop(width, height, 1));
-      setImgSrc(originalImage);
-      setCompletedCrop(undefined);
-      setScale(1);
-      onClose();
     }
   };
 
@@ -168,7 +171,9 @@ const ImageCropper: React.FC<Props> = ({
             />
           </ReactCrop>
         )}
-        <LSSlider min={0.5} max={2} step={0.1} value={scale} onChange={handleChangeScale} />
+        {imgSrc && (
+          <LSSlider min={0.5} max={2} step={0.1} value={scale} onChange={handleChangeScale} />
+        )}
 
         {Boolean(completedCrop) && (
           <canvas
@@ -181,7 +186,7 @@ const ImageCropper: React.FC<Props> = ({
             }}
           />
         )}
-        <div className='flex w-full flex-col sm:flex-row justify-center gap-2 mt-4'>
+        <div className='flex w-full flex-col sm:flex-row justify-center gap-2'>
           <ButtonPrimary
             type='button'
             clickHandler={handleClose}
@@ -199,15 +204,17 @@ const ImageCropper: React.FC<Props> = ({
             Browse
           </ButtonPrimary>
 
-          <ButtonPrimary
-            size='sm'
-            type='button'
-            className='border-2 transition-colors duration-300 text-white bg-teal-400 hover:bg-teal-500'
-            clickHandler={handleUploadAvatar}
-            disabled={!completedCrop || isUploading}
-          >
-            Apply
-          </ButtonPrimary>
+          {imgSrc && completedCrop ? (
+            <ButtonPrimary
+              size='sm'
+              type='button'
+              className='border-2 transition-colors duration-300 text-white bg-teal-400 hover:bg-teal-500'
+              clickHandler={handleUploadAvatar}
+              disabled={!completedCrop || isUploading}
+            >
+              Apply
+            </ButtonPrimary>
+          ) : null}
         </div>
       </div>
     </LSModal>
