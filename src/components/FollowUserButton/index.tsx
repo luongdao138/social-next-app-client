@@ -12,11 +12,10 @@ const FollowUserButton: React.FC<Props> = ({ is_followed, setStateFollow }) => {
     : 'border-red-400 text-red-400 hover:bg-red-400';
 
   return (
-    <div className='w-full max-w-xs'>
+    <div className='w-full flex justify-center mt-12 sm:mt-0 sm:justify-end'>
       <ButtonPrimary
         size='sm'
-        className={`border-2 w-full border-solid transition-colors duration-300 hover:text-white ${followClass}`}
-        fullWidth
+        className={`border-2 border-solid transition-colors duration-300 hover:text-white ${followClass}`}
         clickHandler={setStateFollow}
       >
         {is_followed ? 'Unfollow' : 'Follow'}

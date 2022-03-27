@@ -32,7 +32,7 @@ const Header = () => {
   return (
     <>
       <div
-        className='flex-column sm:flex sm:flex-row justify-between px-5 py-3 shadow-md border border-solid border-neutral-300 rounded-sm items-center fixed max-w-6xl w-full bg-white z-20 top-0'
+        className='flex-column sm:flex sm:flex-row justify-between px-5 py-3 shadow-md border border-solid border-neutral-300 rounded-sm items-center fixed max-w-8xl w-full bg-white z-20 top-0'
         ref={headerRef}
       >
         <div className='hidden lg:block'>
@@ -43,7 +43,7 @@ const Header = () => {
         <Search user_id={user_id} onSearch={handleSearch} />
         <Nav open={openMenu} toggle={handleToggle} />
       </div>
-      <div style={{ marginBottom: height + 20 }}></div>
+      <div style={{ marginBottom: height }}></div>
     </>
   );
 };

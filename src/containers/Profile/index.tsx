@@ -26,15 +26,17 @@ const ProfileContainer = () => {
   }
 
   return (
-    <div className='max-w-6xl w-full mx-auto px-5'>
-      <ProfileInfoContainer
-        is_own={!!profile?.is_own}
-        uploadAvatar={uploadAvatar}
-        uploadProgress={uploadProgress}
-        isUploading={isUploading}
-        removeAvatar={removeAvatar}
-        setStateFollow={setStateFollow}
-      />
+    <div className='max-w-6xl w-full mx-auto mb-5 px-5'>
+      <div style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+        <ProfileInfoContainer
+          is_own={!!profile?.is_own}
+          uploadAvatar={uploadAvatar}
+          uploadProgress={uploadProgress}
+          isUploading={isUploading}
+          removeAvatar={removeAvatar}
+          setStateFollow={setStateFollow}
+        />
+      </div>
     </div>
   );
 };
