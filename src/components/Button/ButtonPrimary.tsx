@@ -20,7 +20,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   buttonClass = `${rootClass} ${widthClass} ${sizeClass} ${className}`;
 
   return (
-    <button style={{ minWidth: '100px' }} className={buttonClass} onClick={clickHandler} {...rest}>
+    <button style={{ minWidth: '80px' }} className={buttonClass} onClick={clickHandler} {...rest}>
       {children}
     </button>
   );

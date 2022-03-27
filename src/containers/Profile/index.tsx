@@ -26,7 +26,7 @@ const ProfileContainer = () => {
   }
 
   return (
-    <div className='max-w-6xl w-full mx-auto px-5 py-6'>
+    <div className='max-w-6xl w-full mx-auto px-5'>
       <ProfileInfoContainer
         is_own={!!profile?.is_own}
         uploadAvatar={uploadAvatar}
