@@ -65,7 +65,7 @@ const Nav: React.FC<NavProps> = ({ toggle, open }) => {
           className='flex items-center gap-1 cursor-pointer py-3'
           onClick={() => !open && toggle()}
         >
-          <Avatar size={matchesSm ? 40 : 30} src={user.avatar} isLink={false} />
+          <Avatar size={matchesSm ? 40 : 30} src={user.avatar || ''} isLink={false} />
           <BsFillCaretDownFill
             className={`transition-all duration-200 ${open ? 'opacity-70' : 'opacity-50'}`}
           />

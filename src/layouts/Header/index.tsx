@@ -24,16 +24,18 @@ const Header = () => {
 
   const handleSearch = (keyword: string) => {
     onSearch(keyword);
-    router.push(LSRoutes.SEARCH);
+    if (!!keyword) {
+      router.push(LSRoutes.SEARCH);
+    }
   };
 
   return (
     <>
       <div
-        className='flex-column sm:flex justify-between px-5 py-3 shadow-md border border-solid border-neutral-300 rounded-sm items-center fixed max-w-6xl w-full bg-white z-20 top-0'
+        className='flex-column sm:flex sm:flex-row justify-between px-5 py-3 shadow-md border border-solid border-neutral-300 rounded-sm items-center fixed max-w-6xl w-full bg-white z-20 top-0'
         ref={headerRef}
       >
-        <div className='hidden md:block'>
+        <div className='hidden lg:block'>
           <h1 className='text-3xl uppercase font-semibold'>
             <Link href={LSRoutes.HOME}>L-Network</Link>
           </h1>
@@ -41,7 +43,7 @@ const Header = () => {
         <Search user_id={user_id} onSearch={handleSearch} />
         <Nav open={openMenu} toggle={handleToggle} />
       </div>
-      <div style={{ marginBottom: height }}></div>
+      <div style={{ marginBottom: height + 20 }}></div>
     </>
   );
 };

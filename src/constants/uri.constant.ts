@@ -18,6 +18,7 @@ export const URI = {
   UNFOLLOW_USER: '/users/unfollow',
   GET_USER_FOLLOWERS: '/users/followers',
   GET_USER_FOLLOWING: '/users/following',
+  SEARCH_USERS: '/users/search',
 
   // image
   IMAGE_UPLOAD: `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
