@@ -9,4 +9,5 @@ export const LSRoutes = {
   REGISTER_SUCCESS: '/register/success',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/forgot-password/reset',
+  SEARCH: '/search',
 };

@@ -7,19 +7,24 @@ import useElementSize from 'utils/hooks/useElementSize';
 import Nav from './Nav';
 import Search from './Search';
 import _ from 'lodash';
+import useSearch from 'utils/hooks/useSearch';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [headerRef, { width, height }] = useElementSize();
   const userAuth = useAppSelector(getUserAuth);
   const user_id = _.get(userAuth, '_id', '');
+  const { onSearch } = useSearch();
+  const router = useRouter();
 
   const handleToggle = () => {
     setOpenMenu((prev) => !prev);
   };
 
   const handleSearch = (keyword: string) => {
-    console.log(keyword);
+    onSearch(keyword);
+    router.push(LSRoutes.SEARCH);
   };
 
   return (
