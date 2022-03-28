@@ -61,16 +61,13 @@ const Nav: React.FC<NavProps> = ({ toggle, open }) => {
         <MdFavorite className='cursor-pointer transition-all duration-200 text-2xl sm:text-3xl opacity-50 hover:opacity-70' />
       </div>
       <div className='relative'>
-        <div
-          className='flex items-center gap-1 cursor-pointer py-3'
-          onClick={() => !open && toggle()}
-        >
+        <div className='flex items-center gap-1 cursor-pointer py-3' onClick={() => toggle()}>
           <Avatar size={matchesSm ? 40 : 30} src={user.avatar || ''} isLink={false} />
           <BsFillCaretDownFill
             className={`transition-all duration-200 ${open ? 'opacity-70' : 'opacity-50'}`}
           />
         </div>
-        {open ? <Menu toggle={toggle} /> : null}
+        {open ? <Menu toggle={() => open && toggle()} /> : null}
       </div>
     </div>
   );

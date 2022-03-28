@@ -27,7 +27,7 @@ const InfoDetail: React.FC<Props> = ({ profile, onOpenEdit, setStateFollow, is_o
         )}
       </div>
       <div
-        className='w-full max-w-2xl md:max-w-full flex flex-col gap-2'
+        className='w-full max-w-2xl md:max-w-full flex flex-col gap-2 items-start'
         // style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
       >
         <div className='flex justify-between gap-4 sm:justify-center md:justify-start'>
