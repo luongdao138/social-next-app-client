@@ -11,6 +11,7 @@
   background-color: transparent;
   border-radius: 100vw;
   margin-left: 10px;
+  margin-block: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
