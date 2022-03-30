@@ -40,7 +40,11 @@ const LSModal: React.FC<Props> = ({
       ></div>
       <div className='h-full flex items-center justify-center'>
         <div
-          style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)', maxHeight: 'calc(100vh - 64px)' }}
+          style={{
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            maxHeight: 'calc(100vh - 64px)',
+            overflow: 'auto',
+          }}
           className={`${
             open ? 'opacity-100 visible' : 'opacity-0 hidden'
           }  transition-all duration-500 rounded-md relative m-5 ${

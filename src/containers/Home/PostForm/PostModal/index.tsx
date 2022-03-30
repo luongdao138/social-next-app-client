@@ -6,10 +6,10 @@ import { BaseEmoji } from 'emoji-mart';
 import React, { useEffect, useState } from 'react';
 import { IoMdImages } from 'react-icons/io';
 import { MdClose, MdOutlineEmojiEmotions, MdCameraAlt } from 'react-icons/md';
-import { usePostFormContext } from '../PostFormContext';
+import { TABS, usePostFormContext } from '../PostFormContext';
 import PostImage from './PostImage';
+import PostCamera from './PostCamera';
 import PostText from './PostText';
-
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -17,8 +17,9 @@ interface Props {
 
 const PostModal: React.FC<Props> = ({ open, onClose }) => {
   const [openEmoji, setOpenEmoji] = useState<boolean>(false);
+  const [openImage, setOpenImage] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>(0);
-  const { setStatus, status, postTextRef } = usePostFormContext();
+  const { setStatus, status, postTextRef, previewSrc, tab, setTab } = usePostFormContext();
 
   const handleClose = () => {
     onClose();
@@ -34,6 +35,21 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
     if (openEmoji) {
       setOpenEmoji(false);
     }
+  };
+  const handleOpenImage = () => {
+    setOpenImage(true);
+  };
+
+  const handleCloseImage = () => {
+    setOpenImage(false);
+  };
+
+  const handleOpenCamera = () => {
+    setTab(TABS.CAMERA);
+  };
+
+  const handleCloseCamera = () => {
+    setTab(TABS.MAIN);
   };
 
   const handleSelect = (e: BaseEmoji) => {
@@ -60,22 +76,14 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
     };
   }, [setStatus]);
 
-  return (
-    <LSModal overflow open={open} maxWidth='xl' fullWidth onBackdropClose onClose={handleClose}>
-      {/* Header */}
-      <div className='flex items-center justify-between'>
-        <span></span>
-        <h1 className='font-bold text-xl'>Create Post</h1>
-        <span
-          className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
-          onClick={handleClose}
-        >
-          <MdClose className='m-auto text-gray-500 text-lg' />
-        </span>
-      </div>
-      <div className='w-full bg-gray-200 mt-4 mb-4' style={{ height: 1 }}></div>
+  useEffect(() => {
+    if (previewSrc.length) {
+      handleOpenImage();
+    }
+  }, [previewSrc]);
 
-      {/* Body */}
+  const MainContainer = () => {
+    return (
       <div>
         {/* User */}
         <div className='flex items-center gap-2 mb-4'>
@@ -92,9 +100,9 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
         </div>
 
         {/* Main */}
-        <div className='h-56 overflow-auto main mb-4'>
+        <div className='h-56 pr-1 overflow-auto main mb-4'>
           <PostText open={open} />
-          <PostImage />
+          {openImage && <PostImage onClose={handleCloseImage} />}
         </div>
 
         {/* Footer */}
@@ -106,8 +114,11 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
             <span>Add to your post</span>
             <div className='flex items-center gap-4 text-3xl'>
               {/* <img src='https://img.icons8.com/color/48/000000/picture--v1.png' /> */}
-              <IoMdImages className='text-green-500 cursor-pointer' />
-              <MdCameraAlt className='cursor-pointer text-red-500' />
+              <IoMdImages
+                className='text-green-500 cursor-pointer'
+                onClick={() => setOpenImage(true)}
+              />
+              <MdCameraAlt className='cursor-pointer text-red-500' onClick={handleOpenCamera} />
               <div className='relative'>
                 <MdOutlineEmojiEmotions
                   className='text-orange-400 cursor-pointer'
@@ -128,6 +139,64 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
           </ButtonPrimary>
         </div>
       </div>
+    );
+  };
+
+  const renderContent = () => {
+    switch (tab) {
+      case TABS.MAIN:
+        return <MainContainer />;
+      case TABS.CAMERA:
+        return <PostCamera onClose={handleCloseCamera} />;
+      case TABS.EDIT_PHOTO:
+        return <></>;
+
+      default:
+        return <></>;
+    }
+  };
+
+  const renderHeader = () => {
+    switch (tab) {
+      case TABS.CAMERA:
+        return (
+          <div className='flex items-center justify-between'>
+            <span
+              className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
+              onClick={handleCloseCamera}
+            >
+              <MdClose className='m-auto text-gray-500 text-lg' />
+            </span>
+            <h1 className='font-bold text-xl'>Take photo</h1>
+            <span></span>
+          </div>
+        );
+      case TABS.MAIN:
+        return (
+          <div className='flex items-center justify-between'>
+            <span></span>
+            <h1 className='font-bold text-xl'>Create Post</h1>
+            <span
+              className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
+              onClick={handleClose}
+            >
+              <MdClose className='m-auto text-gray-500 text-lg' />
+            </span>
+          </div>
+        );
+
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <LSModal overflow open={open} maxWidth='xl' fullWidth onBackdropClose onClose={handleClose}>
+      {/* Header */}
+      {renderHeader()}
+      <div className='w-full bg-gray-200 mt-4 mb-4' style={{ height: 1 }}></div>
+
+      {renderContent()}
     </LSModal>
   );
 };

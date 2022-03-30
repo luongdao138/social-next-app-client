@@ -10,7 +10,7 @@ const PostFormContainer = () => {
     <PostContextProvider>
       <div>
         <PostInput openModal={() => setOpen(true)} />
-        <PostModal open={open} onClose={() => setOpen(false)} />
+        {open ? <PostModal open={open} onClose={() => setOpen(false)} /> : null}
       </div>
     </PostContextProvider>
   );

@@ -7,6 +7,7 @@ interface Props {
 
 const PostInput: React.FC<Props> = ({ openModal }) => {
   const { status } = usePostFormContext();
+  let trimStatus = status.trim();
 
   return (
     <div
@@ -26,10 +27,10 @@ const PostInput: React.FC<Props> = ({ openModal }) => {
         style={{ wordBreak: 'break-word' }}
         className='bg-neutral-100 text-neutral-500 hover:bg-neutral-200 flex-grow rounded-full text-left px-4 py-2'
       >
-        {status
-          ? status.length > 40
-            ? `${status.slice(0, 40)}...`
-            : status
+        {trimStatus
+          ? trimStatus.length > 40
+            ? `${trimStatus.slice(0, 40)}...`
+            : trimStatus
           : 'luongdao, what are you thinking?'}
       </button>
     </div>
