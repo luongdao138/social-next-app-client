@@ -10,7 +10,7 @@ const PostText: React.FC<Props> = ({ open }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateStatus((e.target as HTMLTextAreaElement).value);
   };
-
+  const { postTextRef } = usePostFormContext();
   return (
     <div>
       <AutoResizeTextarea
@@ -18,6 +18,7 @@ const PostText: React.FC<Props> = ({ open }) => {
         value={status || ''}
         onChange={handleChange}
         minRows={2}
+        postTextRef={postTextRef}
       />
     </div>
   );

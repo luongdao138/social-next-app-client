@@ -16,6 +16,7 @@ const AutoResizeTextarea: React.FC<Props> = ({
   value,
   onChange,
   minRows = 3,
+  postTextRef,
 }) => {
   return (
     <div>
@@ -26,6 +27,7 @@ const AutoResizeTextarea: React.FC<Props> = ({
         className={`w-full h-24 resize-none outline-none text-2xl ${classes.textarea}`}
         onChange={onChange}
         autoFocus
+        ref={postTextRef}
       />
     </div>
   );

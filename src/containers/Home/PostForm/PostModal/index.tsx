@@ -1,5 +1,4 @@
 import LSModal from 'components/Modal';
-import usePostForm from 'containers/Home/usePostForm';
 import { BaseEmoji } from 'emoji-mart';
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
