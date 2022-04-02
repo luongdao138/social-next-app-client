@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MdCameraAlt, MdClose } from 'react-icons/md';
 import { dataURLtoFile } from 'utils/convertToFile';
 import { v4 as uuidv4 } from 'uuid';
-import { usePostFormContext } from '../../PostFormContext';
+import { usePostFormContext } from '../../../PostFormContext';
 
 interface Props {
   onClose: () => void;
@@ -56,7 +56,6 @@ const PostCamera: React.FC<Props> = ({ onClose }) => {
       const ctx = canvasEl.getContext('2d');
       if (ctx) {
         ctx.drawImage(videoEl, 0, 0, width, height);
-        console.log(ctx);
         let URL = canvasEl.toDataURL('image/jpeg');
         const file = await dataURLtoFile(URL, uuidv4());
 
@@ -77,16 +76,23 @@ const PostCamera: React.FC<Props> = ({ onClose }) => {
   };
 
   const handleAddImage = () => {
-    addFile(files);
+    addFile(files.map((file) => ({ id: uuidv4(), file })));
 
     onClose();
   };
+
+  useEffect(() => {
+    return onClose;
+  }, [onClose]);
 
   return (
     <div>
       <div className='flex items-center flex-col gap-2'>
         <video autoPlay muted ref={videoRef}></video>
-        <MdCameraAlt className='text-4xl text-teal-400 cursor-pointer' onClick={handleCapture} />
+        <MdCameraAlt
+          className='text-4xl text-teal-400 cursor-pointer'
+          onClick={handleCapture}
+        />
         <ButtonPrimary
           fullWidth
           size='sm'
@@ -101,7 +107,10 @@ const PostCamera: React.FC<Props> = ({ onClose }) => {
       {preview.length ? (
         <div className='grid grid-cols-3 gap-2 mt-4'>
           {preview.map((image, index) => (
-            <div key={index} className='p-1 border relative border-teal-400 rounded'>
+            <div
+              key={index}
+              className='p-1 border relative border-teal-400 rounded'
+            >
               <img src={image} alt='' className='w-full' />
               <span
                 onClick={() => handleRemove(index)}

@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { authReducer } from './auth';
 import commonReducers from './common/reducers';
 import { metadataReducer } from './metadata';
+import { postFormReducer } from './postForm';
 import { profileReducer } from './profile';
 import { searchReducer } from './search';
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   search: searchReducer,
+  postForm: postFormReducer,
 });
 
 export default rootReducer;

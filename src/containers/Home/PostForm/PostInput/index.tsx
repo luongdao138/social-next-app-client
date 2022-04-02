@@ -1,13 +1,13 @@
 import Avatar from 'components/Avatar';
 import React from 'react';
-import { usePostFormContext } from '../PostFormContext';
+import { usePostFormContext } from '../../PostFormContext';
 interface Props {
   openModal: () => void;
 }
 
 const PostInput: React.FC<Props> = ({ openModal }) => {
   const { status } = usePostFormContext();
-  let trimStatus = status.trim();
+  let trimStatus = status?.trim() || '';
 
   return (
     <div

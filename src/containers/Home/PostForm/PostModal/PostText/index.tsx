@@ -1,26 +1,23 @@
 import AutoResizeTextarea from 'components/AutoResizeTextarea';
-import React, { useState } from 'react';
-import { usePostFormContext } from '../../PostFormContext';
-
+import React from 'react';
+import { usePostFormContext } from '../../../PostFormContext';
 interface Props {
   open?: boolean;
 }
 
 const PostText: React.FC<Props> = ({ open }) => {
-  const { status, setStatus, postTextRef } = usePostFormContext();
+  const { status, updateStatus } = usePostFormContext();
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setStatus((e.target as HTMLTextAreaElement).value);
+    updateStatus((e.target as HTMLTextAreaElement).value);
   };
 
   return (
     <div>
       <AutoResizeTextarea
         placeholder='Luongdao, what are you thinking?'
-        value={status}
+        value={status || ''}
         onChange={handleChange}
         minRows={2}
-        open={open}
-        postTextRef={postTextRef}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, CSSProperties } from 'react';
 
 export interface ButtonBaseProps {
   clickHandler?: () => void;
@@ -7,4 +7,5 @@ export interface ButtonBaseProps {
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   disabled?: boolean;
+  style?: CSSProperties;
 }

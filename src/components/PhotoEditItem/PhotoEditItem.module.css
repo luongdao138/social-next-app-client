@@ -1,0 +1,8 @@
+.action {
+  opacity: 0;
+  visibility: hidden;
+}
+.container:hover .action {
+  opacity: 1;
+  visibility: visible;
+}
