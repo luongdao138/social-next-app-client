@@ -14,6 +14,7 @@ import {
 } from 'utils/convertToFile';
 import { canvasPreview } from 'utils/canvasPreview';
 import { v4 as uuidv4 } from 'uuid';
+import Confirm from 'components/Confirm';
 
 type Mode = 'crop' | 'rotate' | undefined;
 type CompletedCrop = {
@@ -29,12 +30,17 @@ const EditPhotoDetail = () => {
   const [mode, setMode] = useState<Mode>();
   const [canCrop, setCanCrop] = useState<boolean>(false);
   const [isChanged, setIsChanged] = useState<boolean>(false);
+  const [changeState, setChangeState] = useState<{
+    isRequest: boolean;
+    cb?: () => void;
+  }>({ isRequest: false });
   const {
     changeTab,
     selectedPhoto,
     updateFile,
     handleNextPhoto,
     handlePrevPhoto,
+    images,
   } = usePostFormContext();
   const [description, setDescription] = useState<string>(
     selectedPhoto?.description || ''
@@ -42,6 +48,14 @@ const EditPhotoDetail = () => {
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // const [rotate, setRotate] = useState;
+
+  const isFirstImage = images
+    ? images.findIndex((image) => image.id === selectedPhoto?.id) === 0
+    : false;
+  const isLastImage = images
+    ? images.findIndex((image) => image.id === selectedPhoto?.id) ===
+      images.length - 1
+    : false;
 
   const handleCropChange = (crop: PixelCrop, percentageCrop: PercentCrop) => {
     setCrop(percentageCrop);
@@ -56,6 +70,7 @@ const EditPhotoDetail = () => {
     setCompletedCrop(undefined);
     setMode(undefined);
     setCanCrop(false);
+    setChangeState({ isRequest: false });
   };
 
   const handlePrevImage = () => {
@@ -141,39 +156,50 @@ const EditPhotoDetail = () => {
   if (!selectedPhoto) return <></>;
 
   return (
-    <div className='grid grid-cols-12 gap-4'>
-      <div className='col-span-4 flex flex-col'>
-        <div className='flex-grow'>
-          <textarea
-            placeholder='Description'
-            className='resize-none h-36 rounded-lg w-full outline-none border border-solid border-neutral-300 py-4 px-5 focus:border-2 focus:border-blue-500'
-            // value={image.description}
-            // onChange={handleChange}
-            value={description}
-            onChange={handleChangeDesc}
-          />
+    <div>
+      <Confirm
+        onCancel={() => {
+          setChangeState({ isRequest: false });
+        }}
+        onConfirm={changeState.cb || (() => {})}
+        open={changeState.isRequest}
+        title='Unsaved changes'
+        confirmText='Confirm'
+        description='If you quit now, you will lose all the changes you just made.'
+      />
+      <div className='grid grid-cols-12 gap-4'>
+        <div className='col-span-4 flex flex-col'>
+          <div className='flex-grow'>
+            <textarea
+              placeholder='Description'
+              className='resize-none h-36 rounded-lg w-full outline-none border border-solid border-neutral-300 py-4 px-5 focus:border-2 focus:border-blue-500'
+              // value={image.description}
+              // onChange={handleChange}
+              value={description}
+              onChange={handleChangeDesc}
+            />
 
-          <div className='mt-2'>
-            <div
-              className={`w-full p-3 flex items-center gap-4 cursor-pointer rounded-md transition-all duration-300 ${
-                mode === 'crop' ? 'bg-blue-50' : 'hover:bg-gray-100'
-              }`}
-              onClick={handleClickCrop}
-            >
-              <span
-                className={`w-12 h-12 rounded-full flex ${
-                  mode === 'crop' ? 'bg-blue-600' : 'bg-slate-200'
+            <div className='mt-2'>
+              <div
+                className={`w-full p-3 flex items-center gap-4 cursor-pointer rounded-md transition-all duration-300 ${
+                  mode === 'crop' ? 'bg-blue-50' : 'hover:bg-gray-100'
                 }`}
+                onClick={handleClickCrop}
               >
-                <MdOutlineCrop
-                  className={`m-auto text-2xl ${
-                    mode === 'crop' ? 'text-white' : ''
+                <span
+                  className={`w-12 h-12 rounded-full flex ${
+                    mode === 'crop' ? 'bg-blue-600' : 'bg-slate-200'
                   }`}
-                />
-              </span>
-              <span className='text-lg font-medium'>Crop</span>
-            </div>
-            {/* <div
+                >
+                  <MdOutlineCrop
+                    className={`m-auto text-2xl ${
+                      mode === 'crop' ? 'text-white' : ''
+                    }`}
+                  />
+                </span>
+                <span className='text-lg font-medium'>Crop</span>
+              </div>
+              {/* <div
               className={`w-full p-3 flex items-center gap-4 cursor-pointer rounded-md transition-all duration-300 ${
                 mode === 'rotate' ? 'bg-blue-50' : 'hover:bg-gray-100'
               }`}
@@ -192,77 +218,93 @@ const EditPhotoDetail = () => {
               </span>
               <span className='text-lg font-medium'>Rotate</span>
             </div> */}
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-2'>
+            <ButtonPrimary
+              disabled={!isChanged}
+              size='sm'
+              className={`${
+                isChanged ? 'bg-blue-600' : 'bg-gray-200 text-black opacity-50'
+              } text-lg font-medium`}
+              clickHandler={handleSave}
+            >
+              Save
+            </ButtonPrimary>
+            <ButtonPrimary
+              size='sm'
+              clickHandler={handleCancel}
+              className='bg-gray-200 text-lg text-black font-medium'
+            >
+              Cancel
+            </ButtonPrimary>
           </div>
         </div>
-
-        <div className='grid grid-cols-2 gap-2'>
-          <ButtonPrimary
-            disabled={!isChanged}
-            size='sm'
-            className={`${
-              isChanged ? 'bg-blue-600' : 'bg-gray-200 text-black opacity-50'
-            } text-lg font-medium`}
-            clickHandler={handleSave}
-          >
-            Save
-          </ButtonPrimary>
-          <ButtonPrimary
-            size='sm'
-            clickHandler={handleCancel}
-            className='bg-gray-200 text-lg text-black font-medium'
-          >
-            Cancel
-          </ButtonPrimary>
-        </div>
-      </div>
-      <div
-        className='col-span-8 relative bg-cover bg-no-repeat bg-center'
-        style={{
-          height: '450px',
-          backgroundImage: `url("${previewUrl}")`,
-        }}
-      >
         <div
-          className='absolute inset-0 z-10'
-          style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
-        ></div>
-        <ReactCrop
-          crop={crop}
-          onChange={handleCropChange}
-          onComplete={handleCropComplete}
-          //   aspect
-          keepSelection
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20'
-          style={{ cursor: 'default' }}
-          minWidth={20}
-          minHeight={20}
-          disabled={!canCrop}
+          className='col-span-8 relative bg-cover bg-no-repeat bg-center'
+          style={{
+            height: '450px',
+            backgroundImage: `url("${previewUrl}")`,
+          }}
         >
-          <img
-            src={previewUrl}
-            alt=''
-            className='max-w-full mx-auto object-cover'
-            style={{ maxHeight: '450px' }}
-            ref={imageRef}
-          />
-        </ReactCrop>
-
-        <canvas ref={canvasRef} hidden />
-
-        <div>
-          <span
-            className='absolute cursor-pointer top-1/2 -translate-y-1/2 left-5 w-12 h-12 rounded-full bg-white flex z-30'
-            onClick={handlePrevImage}
+          <div
+            className='absolute inset-0 z-10'
+            style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
+          ></div>
+          <ReactCrop
+            crop={crop}
+            onChange={handleCropChange}
+            onComplete={handleCropComplete}
+            //   aspect
+            keepSelection
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20'
+            style={{ cursor: 'default' }}
+            minWidth={20}
+            minHeight={20}
+            disabled={!canCrop}
           >
-            <IoIosArrowBack className='m-auto text-2xl text-gray-500' />
-          </span>
-          <span
-            className='absolute cursor-pointer top-1/2 -translate-y-1/2 right-5 w-12 h-12 rounded-full bg-white flex z-30'
-            onClick={handleNextImage}
-          >
-            <IoIosArrowForward className='m-auto text-2xl text-gray-500' />
-          </span>
-          <span></span>
+            <img
+              src={previewUrl}
+              alt=''
+              className='max-w-full mx-auto object-cover'
+              style={{ maxHeight: '450px' }}
+              ref={imageRef}
+            />
+          </ReactCrop>
+
+          <canvas ref={canvasRef} hidden />
+
+          <div>
+            {!isFirstImage && (
+              <span
+                className='absolute cursor-pointer top-1/2 -translate-y-1/2 left-5 w-12 h-12 rounded-full bg-white flex z-30'
+                onClick={() => {
+                  if (isChanged) {
+                    setChangeState({ isRequest: true, cb: handlePrevImage });
+                  } else {
+                    handlePrevImage();
+                  }
+                }}
+              >
+                <IoIosArrowBack className='m-auto text-2xl text-gray-500' />
+              </span>
+            )}
+            {!isLastImage && (
+              <span
+                className='absolute cursor-pointer top-1/2 -translate-y-1/2 right-5 w-12 h-12 rounded-full bg-white flex z-30'
+                onClick={() => {
+                  if (isChanged) {
+                    setChangeState({ isRequest: true, cb: handleNextImage });
+                  } else {
+                    handleNextImage();
+                  }
+                }}
+              >
+                <IoIosArrowForward className='m-auto text-2xl text-gray-500' />
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
