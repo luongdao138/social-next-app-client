@@ -51,7 +51,7 @@ const PhotoEditItem: React.FC<Props> = ({
         </div>
         <span
           onClick={() => handleRemoveImage(image.id)}
-          className='w-7 h-7 flex rounded-full z-10 border border-solid border-neutral-300 bg-white cursor-pointer absolute top-4 right-4'
+          className='w-7 h-7 flex rounded-full border border-solid border-neutral-300 bg-white cursor-pointer absolute top-4 right-4 z-20'
         >
           <MdClose className='m-auto text-gray-500 text-lg' />
         </span>

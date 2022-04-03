@@ -6,7 +6,7 @@ import {
   usePostFormContext,
 } from 'containers/Home/PostFormContext';
 import _ from 'lodash';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FcAddImage } from 'react-icons/fc';
 import { FileItem } from 'services/postForm.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -57,6 +57,12 @@ const EditPhoto: React.FC<Props> = ({ handleBack }) => {
     updateImages(tempImages);
     handleBack();
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      updateImages(tempImages);
+    }, 500);
+  }, [tempImages, updateImages]);
 
   return (
     <div>

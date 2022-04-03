@@ -11,9 +11,13 @@ import ReactCrop, {
 } from 'react-image-crop';
 import { UploadImageResponse } from 'services/image.service';
 import useEffectDebounce from 'utils/hooks/useEffectDebounce';
-import { canvasPreview } from './canvasPreview';
+import { canvasPreview } from 'utils/canvasPreview';
 
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
+function centerAspectCrop(
+  mediaWidth: number,
+  mediaHeight: number,
+  aspect: number
+) {
   return centerCrop(
     makeAspectCrop({ width: 180, unit: 'px' }, aspect, mediaWidth, mediaHeight),
     mediaWidth,
@@ -56,7 +60,10 @@ const ImageCropper: React.FC<Props> = ({
     setCrop(percentageCrop);
   };
 
-  const handleCropCompleted = (crop: PixelCrop, percentageCrop: PercentCrop) => {
+  const handleCropCompleted = (
+    crop: PixelCrop,
+    percentageCrop: PercentCrop
+  ) => {
     setCompletedCrop(crop);
   };
 
@@ -128,7 +135,12 @@ const ImageCropper: React.FC<Props> = ({
         imgRef.current &&
         previewCanvasRef.current
       ) {
-        canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop, scale);
+        canvasPreview(
+          imgRef.current,
+          previewCanvasRef.current,
+          completedCrop,
+          scale
+        );
       }
     },
     timeout: 100,
@@ -138,7 +150,13 @@ const ImageCropper: React.FC<Props> = ({
   return (
     <LSModal open={open} fullWidth maxWidth='6xl'>
       <div className='w-full gap-4 flex flex-col items-center justify-center'>
-        <input type='file' hidden ref={inputFileRef} accept='image/*' onChange={onSelectFile} />
+        <input
+          type='file'
+          hidden
+          ref={inputFileRef}
+          accept='image/*'
+          onChange={onSelectFile}
+        />
         {uploadProgress ? (
           <div className='w-full relative max-w-md mx-auto h-1 rounded-xl bg-gray-400 '>
             <span
@@ -166,13 +184,23 @@ const ImageCropper: React.FC<Props> = ({
               alt='Image crop'
               onLoad={onLoadImage}
               className='object-cover'
-              style={{ maxHeight: 400, maxWidth: '100%', transform: `scale(${scale})` }}
+              style={{
+                maxHeight: 400,
+                maxWidth: '100%',
+                transform: `scale(${scale})`,
+              }}
               crossOrigin='anonymous'
             />
           </ReactCrop>
         )}
         {imgSrc && (
-          <LSSlider min={0.5} max={2} step={0.1} value={scale} onChange={handleChangeScale} />
+          <LSSlider
+            min={0.5}
+            max={2}
+            step={0.1}
+            value={scale}
+            onChange={handleChangeScale}
+          />
         )}
 
         {Boolean(completedCrop) && (

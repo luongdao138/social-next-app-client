@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FcAddImage } from 'react-icons/fc';
 import { MdClose, MdEdit } from 'react-icons/md';
-import { createPreviewUrl } from 'utils/convertToFile';
+import { createPreviewUrl, destroyPreviewUrl } from 'utils/convertToFile';
 import { fileTypes, TABS, usePostFormContext } from '../../../PostFormContext';
 import classes from './PostImage.module.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,6 +29,14 @@ const PostImage: React.FC<Props> = ({ onClose }) => {
     noClick: hasImage,
   });
 
+  const previewUrls = useMemo(() => {
+    if (images) {
+      return images.map((image) => createPreviewUrl(image.file));
+    } else {
+      return [];
+    }
+  }, [images]);
+
   const handleAddMoreImage = () => {
     inputRef.current?.click();
   };
@@ -43,6 +51,11 @@ const PostImage: React.FC<Props> = ({ onClose }) => {
     resetFiles();
     onClose();
   };
+  useEffect(() => {
+    return () => {
+      previewUrls.forEach((url) => destroyPreviewUrl(url));
+    };
+  }, [previewUrls]);
 
   return (
     <div className='relative'>
@@ -96,13 +109,9 @@ const PostImage: React.FC<Props> = ({ onClose }) => {
           ) : (
             <div className='w-full grid grid-cols-2 gap-2'>
               <input {...getInputProps()} />
-              {images.slice(0, 4).map((image, index) => (
+              {previewUrls.slice(0, 4).map((url, index) => (
                 <div key={index}>
-                  <img
-                    src={createPreviewUrl(image.file)}
-                    alt=''
-                    className='h-36 w-full object-cover'
-                  />
+                  <img src={url} alt='' className='h-36 w-full object-cover' />
                 </div>
               ))}
             </div>

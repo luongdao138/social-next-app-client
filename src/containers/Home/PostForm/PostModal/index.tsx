@@ -127,7 +127,7 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
           <div className='flex items-center justify-between'>
             <span
               className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
-              onClick={handleBackToMain}
+              onClick={() => changeTab(TABS.EDIT_PHOTOS)}
             >
               <MdClose className='m-auto text-gray-500 text-lg' />
             </span>

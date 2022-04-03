@@ -30,6 +30,7 @@ interface ContextState {
   updateImages: (images: FileItem[]) => void;
   selectedPhoto: FileItem | undefined;
   handleSelectPhoto: (imageId: string) => void;
+  updateFile: (id: string, data: Partial<FileItem>) => void;
 }
 
 const PostFormContext = React.createContext<ContextState>({} as ContextState);
@@ -54,6 +55,14 @@ const PostContextProvider: React.FC = ({ children }) => {
     if (!images) return;
 
     const newImages = images.filter((f) => f.id !== id);
+    setImages(newImages);
+  };
+
+  const updateFile = (id: string, data: Partial<FileItem>) => {
+    let newImages = _.clone(images);
+    newImages = newImages.map((image) =>
+      image.id === id ? { ...image, ...data } : image
+    );
     setImages(newImages);
   };
 
@@ -86,6 +95,7 @@ const PostContextProvider: React.FC = ({ children }) => {
         postTextRef,
         removeFile,
         resetFiles,
+        updateFile,
         status,
         tab,
         updateStatus: setStatus,
