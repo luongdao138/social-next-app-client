@@ -31,6 +31,8 @@ interface ContextState {
   selectedPhoto: FileItem | undefined;
   handleSelectPhoto: (imageId: string) => void;
   updateFile: (id: string, data: Partial<FileItem>) => void;
+  handleNextPhoto: () => void;
+  handlePrevPhoto: () => void;
 }
 
 const PostFormContext = React.createContext<ContextState>({} as ContextState);
@@ -80,6 +82,34 @@ const PostContextProvider: React.FC = ({ children }) => {
     changeTab(TABS.EDIT_PHOTO);
   };
 
+  const handleNextPhoto = () => {
+    const currentIndex = images.findIndex(
+      (image) => image.id === selectedPhoto?.id
+    );
+    if (currentIndex !== -1) {
+      if (currentIndex === images.length - 1) {
+        // last image
+        setSelectedPhoto(images[0]);
+      } else {
+        setSelectedPhoto(images[currentIndex + 1]);
+      }
+    }
+  };
+
+  const handlePrevPhoto = () => {
+    const currentIndex = images.findIndex(
+      (image) => image.id === selectedPhoto?.id
+    );
+    if (currentIndex !== -1) {
+      if (currentIndex === 0) {
+        // last image
+        setSelectedPhoto(images[images.length - 1]);
+      } else {
+        setSelectedPhoto(images[currentIndex - 1]);
+      }
+    }
+  };
+
   useEffect(() => {
     return () => {
       console.log('Component unmount!');
@@ -102,6 +132,8 @@ const PostContextProvider: React.FC = ({ children }) => {
         updateImages: setImages,
         handleSelectPhoto,
         selectedPhoto,
+        handleNextPhoto,
+        handlePrevPhoto,
       }}
     >
       {children}

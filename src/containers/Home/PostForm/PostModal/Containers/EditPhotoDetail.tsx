@@ -28,17 +28,20 @@ const EditPhotoDetail = () => {
   const [completedCrop, setCompletedCrop] = useState<CompletedCrop>();
   const [mode, setMode] = useState<Mode>();
   const [canCrop, setCanCrop] = useState<boolean>(false);
-  const { changeTab, selectedPhoto, updateFile } = usePostFormContext();
+  const [isChanged, setIsChanged] = useState<boolean>(false);
+  const {
+    changeTab,
+    selectedPhoto,
+    updateFile,
+    handleNextPhoto,
+    handlePrevPhoto,
+  } = usePostFormContext();
   const [description, setDescription] = useState<string>(
     selectedPhoto?.description || ''
   );
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // const [rotate, setRotate] = useState;
-
-  const isChanged =
-    description !== selectedPhoto?.description ||
-    !_.isEqual(completedCrop?.percentage, fullCrop);
 
   const handleCropChange = (crop: PixelCrop, percentageCrop: PercentCrop) => {
     setCrop(percentageCrop);
@@ -48,9 +51,22 @@ const EditPhotoDetail = () => {
     setDescription(e.target.value);
   };
 
-  const handlePrevImage = () => {};
+  const resetCrop = () => {
+    setCrop(undefined);
+    setCompletedCrop(undefined);
+    setMode(undefined);
+    setCanCrop(false);
+  };
 
-  const handleNextImage = () => {};
+  const handlePrevImage = () => {
+    resetCrop();
+    handlePrevPhoto();
+  };
+
+  const handleNextImage = () => {
+    resetCrop();
+    handleNextPhoto();
+  };
 
   const previewUrl = useMemo(() => {
     if (selectedPhoto?.file) {
@@ -101,6 +117,22 @@ const EditPhotoDetail = () => {
       }, 500);
     };
   }, [previewUrl]);
+
+  useEffect(() => {
+    setDescription(selectedPhoto?.description || '');
+  }, [selectedPhoto]);
+
+  useEffect(() => {
+    const desc = description || '';
+    const selectedDesc = selectedPhoto?.description || '';
+    if (!completedCrop) {
+      setIsChanged(desc !== selectedDesc);
+    } else {
+      setIsChanged(
+        desc !== selectedDesc || !_.isEqual(completedCrop.percentage, fullCrop)
+      );
+    }
+  }, [description, selectedPhoto, completedCrop]);
 
   // const handleClickRotate = () => {
   //   setMode('rotate');
