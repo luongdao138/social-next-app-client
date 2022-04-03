@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop, { Crop, PercentCrop, PixelCrop } from 'react-image-crop';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { MdCropRotate, MdOutlineCrop } from 'react-icons/md';
+import { MdClose, MdCropRotate, MdOutlineCrop } from 'react-icons/md';
 import ButtonPrimary from 'components/Button/ButtonPrimary';
 import _ from 'lodash';
 import { TABS, usePostFormContext } from 'containers/Home/PostFormContext';
@@ -109,6 +109,14 @@ const EditPhotoDetail = () => {
     changeTab(TABS.EDIT_PHOTOS);
   };
 
+  const handleExit = () => {
+    if (isChanged) {
+      setChangeState({ isRequest: true, cb: handleCancel });
+    } else {
+      handleCancel();
+    }
+  };
+
   const handleSave = async () => {
     if (imageRef.current && canvasRef.current && completedCrop) {
       await canvasPreview(
@@ -167,6 +175,17 @@ const EditPhotoDetail = () => {
         confirmText='Confirm'
         description='If you quit now, you will lose all the changes you just made.'
       />
+      <div className='flex items-center justify-between'>
+        <span
+          className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
+          onClick={handleExit}
+        >
+          <MdClose className='m-auto text-gray-500 text-lg' />
+        </span>
+        <h1 className='font-bold text-xl'>Photo detail</h1>
+        <span></span>
+      </div>
+      <div className='w-full bg-gray-200 mt-4 mb-4' style={{ height: 1 }}></div>
       <div className='grid grid-cols-12 gap-4'>
         <div className='col-span-4 flex flex-col'>
           <div className='flex-grow'>

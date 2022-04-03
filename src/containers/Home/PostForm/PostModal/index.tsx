@@ -25,6 +25,8 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
     images = [],
   } = usePostFormContext();
 
+  const canRenderHeader = tab !== TABS.EDIT_PHOTO;
+
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
@@ -122,19 +124,6 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
             <span></span>
           </div>
         );
-      case TABS.EDIT_PHOTO:
-        return (
-          <div className='flex items-center justify-between'>
-            <span
-              className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
-              onClick={() => changeTab(TABS.EDIT_PHOTOS)}
-            >
-              <MdClose className='m-auto text-gray-500 text-lg' />
-            </span>
-            <h1 className='font-bold text-xl'>Photo detail</h1>
-            <span></span>
-          </div>
-        );
 
       default:
         return <></>;
@@ -195,8 +184,15 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
       onClose={handleClose}
     >
       {/* Header */}
-      {renderHeader()}
-      <div className='w-full bg-gray-200 mt-4 mb-4' style={{ height: 1 }}></div>
+      {canRenderHeader ? (
+        <>
+          {renderHeader()}
+          <div
+            className='w-full bg-gray-200 mt-4 mb-4'
+            style={{ height: 1 }}
+          ></div>
+        </>
+      ) : null}
 
       {/* {renderContent()} */}
       {renderContent()}

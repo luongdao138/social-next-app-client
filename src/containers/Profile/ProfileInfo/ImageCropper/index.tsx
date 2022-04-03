@@ -12,6 +12,8 @@ import ReactCrop, {
 import { UploadImageResponse } from 'services/image.service';
 import useEffectDebounce from 'utils/hooks/useEffectDebounce';
 import { canvasPreview } from 'utils/canvasPreview';
+import { dataURLtoFile } from 'utils/convertToFile';
+import { v4 as uuidv4 } from 'uuid';
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -89,9 +91,7 @@ const ImageCropper: React.FC<Props> = ({
   const handleUploadAvatar = async () => {
     if (previewCanvasRef.current) {
       const canvasDataURL = previewCanvasRef.current.toDataURL('image/jpeg');
-      const res: Response = await fetch(canvasDataURL);
-      const blob: Blob = await res.blob();
-      const file = new File([blob], 'image', { type: 'image/jpg' });
+      const file = await dataURLtoFile(canvasDataURL, uuidv4());
 
       if (file) {
         uploadAvatar(file, (res) => {
