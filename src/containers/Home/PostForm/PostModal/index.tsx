@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { TABS, usePostFormContext } from '../../PostFormContext';
 import EditPhoto from './Containers/EditPhoto';
+import EditPhotoDetail from './Containers/EditPhotoDetail';
 import Main from './Containers/Main';
 import PostCamera from './PostCamera';
 interface Props {
@@ -108,7 +109,7 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
             </span>
           </div>
         );
-      case TABS.EDIT_PHOTO:
+      case TABS.EDIT_PHOTOS:
         return (
           <div className='flex items-center justify-between'>
             <span
@@ -118,6 +119,19 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
               <MdClose className='m-auto text-gray-500 text-lg' />
             </span>
             <h1 className='font-bold text-xl'>Edit Photo</h1>
+            <span></span>
+          </div>
+        );
+      case TABS.EDIT_PHOTO:
+        return (
+          <div className='flex items-center justify-between'>
+            <span
+              className='w-7 h-7 flex rounded-full bg-gray-200 cursor-pointer'
+              onClick={handleBackToMain}
+            >
+              <MdClose className='m-auto text-gray-500 text-lg' />
+            </span>
+            <h1 className='font-bold text-xl'>Photo detail</h1>
             <span></span>
           </div>
         );
@@ -145,11 +159,29 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
         );
       case TABS.CAMERA:
         return <PostCamera onClose={handleBackToMain} />;
-      case TABS.EDIT_PHOTO:
+      case TABS.EDIT_PHOTOS:
         return <EditPhoto handleBack={handleBackToMain} />;
+      case TABS.EDIT_PHOTO:
+        return <EditPhotoDetail />;
 
       default:
         return <></>;
+    }
+  };
+
+  const getWidth = () => {
+    switch (tab) {
+      case TABS.MAIN:
+        return 'xl';
+      case TABS.CAMERA:
+        return 'xl';
+      case TABS.EDIT_PHOTOS:
+        return '4xl';
+      case TABS.EDIT_PHOTO:
+        return '6xl';
+
+      default:
+        return 'xl';
     }
   };
 
@@ -157,7 +189,7 @@ const PostModal: React.FC<Props> = ({ open, onClose }) => {
     <LSModal
       overflow={tab === TABS.MAIN}
       open={open}
-      maxWidth={tab !== TABS.EDIT_PHOTO ? 'xl' : '4xl'}
+      maxWidth={getWidth()}
       fullWidth
       onBackdropClose
       onClose={handleClose}

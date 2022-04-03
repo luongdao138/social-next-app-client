@@ -34,7 +34,7 @@ const PostImage: React.FC<Props> = ({ onClose }) => {
   };
 
   const handleOpenEdit = () => {
-    changeTab(TABS.EDIT_PHOTO);
+    changeTab(TABS.EDIT_PHOTOS);
   };
 
   const handleClose = (e: React.MouseEvent<HTMLSpanElement>) => {

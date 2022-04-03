@@ -81,10 +81,6 @@ const PostCamera: React.FC<Props> = ({ onClose }) => {
     onClose();
   };
 
-  useEffect(() => {
-    return onClose;
-  }, [onClose]);
-
   return (
     <div>
       <div className='flex items-center flex-col gap-2'>

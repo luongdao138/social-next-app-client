@@ -7,12 +7,14 @@ interface Props {
   image: FileItem;
   handleChangeImage: (imageId: string, data: Partial<FileItem>) => void;
   handleRemoveImage: (imageId: string) => void;
+  handleSelectPhoto: (imageId: string) => void;
 }
 
 const PhotoEditItem: React.FC<Props> = ({
   image,
   handleChangeImage,
   handleRemoveImage,
+  handleSelectPhoto,
 }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -38,7 +40,12 @@ const PhotoEditItem: React.FC<Props> = ({
       style={{ boxShadow: '0 2px 4px 0 rgba(0,0,0,0.1)' }}
     >
       <div className={classes.action}>
-        <div className='cursor-pointer absolute left-4 top-4 flex items-center gap-1 z-20 p-2 bg-white rounded-md'>
+        <div
+          className='cursor-pointer absolute left-4 top-4 flex items-center gap-1 z-20 p-2 bg-white rounded-md'
+          onClick={() => {
+            handleSelectPhoto(image.id);
+          }}
+        >
           <MdEdit className='text-xl' />
           <span className='font-medium'>Edit</span>
         </div>

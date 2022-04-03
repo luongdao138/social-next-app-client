@@ -1,10 +1,14 @@
 import ButtonPrimary from 'components/Button/ButtonPrimary';
 import PhotoEditItem from 'components/PhotoEditItem';
-import { fileTypes, usePostFormContext } from 'containers/Home/PostFormContext';
-import React, { useEffect, useRef, useState } from 'react';
+import {
+  fileTypes,
+  TABS,
+  usePostFormContext,
+} from 'containers/Home/PostFormContext';
+import _ from 'lodash';
+import React, { useRef, useState } from 'react';
 import { FcAddImage } from 'react-icons/fc';
 import { FileItem } from 'services/postForm.service';
-import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -12,7 +16,8 @@ interface Props {
 }
 
 const EditPhoto: React.FC<Props> = ({ handleBack }) => {
-  const { images, updateImages } = usePostFormContext();
+  const { images, updateImages, handleSelectPhoto, changeTab } =
+    usePostFormContext();
   const [tempImages, setTempImages] = useState<FileItem[]>(images || []);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -53,10 +58,6 @@ const EditPhoto: React.FC<Props> = ({ handleBack }) => {
     handleBack();
   };
 
-  useEffect(() => {
-    return handleBack;
-  }, [handleBack]);
-
   return (
     <div>
       <input
@@ -77,6 +78,7 @@ const EditPhoto: React.FC<Props> = ({ handleBack }) => {
               image={image}
               handleChangeImage={handleChangeImage}
               handleRemoveImage={handleRemoveImage}
+              handleSelectPhoto={handleSelectPhoto}
             />
           ))}
         </div>

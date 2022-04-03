@@ -11,6 +11,7 @@ import { FileItem } from 'services/postForm.service';
 export enum TABS {
   MAIN = 'MAIN',
   CAMERA = 'CAMERA',
+  EDIT_PHOTOS = 'EDIT_PHOTOS',
   EDIT_PHOTO = 'EDIT_PHOTO',
 }
 
@@ -27,6 +28,8 @@ interface ContextState {
   tab: TABS;
   changeTab: (tab: TABS) => void;
   updateImages: (images: FileItem[]) => void;
+  selectedPhoto: FileItem | undefined;
+  handleSelectPhoto: (imageId: string) => void;
 }
 
 const PostFormContext = React.createContext<ContextState>({} as ContextState);
@@ -36,6 +39,9 @@ const PostContextProvider: React.FC = ({ children }) => {
   const [tab, setTab] = useState<TABS>(TABS.MAIN);
   const [status, setStatus] = useState<string>('');
   const [images, setImages] = useState<FileItem[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<FileItem | undefined>(
+    undefined
+  );
 
   const addFile = (file: FileItem | FileItem[]) => {
     const originalImages =
@@ -59,6 +65,12 @@ const PostContextProvider: React.FC = ({ children }) => {
     setTab(newTab);
   }, []);
 
+  const handleSelectPhoto = (imageId: string) => {
+    const image = images.find((i) => i.id === imageId);
+    setSelectedPhoto(image);
+    changeTab(TABS.EDIT_PHOTO);
+  };
+
   useEffect(() => {
     return () => {
       console.log('Component unmount!');
@@ -78,6 +90,8 @@ const PostContextProvider: React.FC = ({ children }) => {
         tab,
         updateStatus: setStatus,
         updateImages: setImages,
+        handleSelectPhoto,
+        selectedPhoto,
       }}
     >
       {children}

@@ -19,3 +19,7 @@
   border-radius: 100vw;
   transition: all 0.3s ease-in-out;
 }
+
+.ReactCrop.crop {
+  display: block;
+}
