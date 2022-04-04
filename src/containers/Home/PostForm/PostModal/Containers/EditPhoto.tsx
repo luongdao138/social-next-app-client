@@ -8,7 +8,7 @@ import {
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { FcAddImage } from 'react-icons/fc';
-import { FileItem } from 'services/postForm.service';
+import { FileItem } from 'services/timeline.service';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {

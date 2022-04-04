@@ -10,11 +10,11 @@ const PostText: React.FC<Props> = ({ open }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateStatus((e.target as HTMLTextAreaElement).value);
   };
-  const { postTextRef } = usePostFormContext();
+  const { postTextRef, userAuth } = usePostFormContext();
   return (
     <div>
       <AutoResizeTextarea
-        placeholder='Luongdao, what are you thinking?'
+        placeholder={`${userAuth?.username}, what are you thinking?`}
         value={status || ''}
         onChange={handleChange}
         minRows={2}

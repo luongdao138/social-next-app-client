@@ -1,10 +1,12 @@
 import Avatar from 'components/Avatar';
 import ButtonPrimary from 'components/Button/ButtonPrimary';
 import EmojiPicker from 'components/EmojiPicker';
+import { usePostFormContext } from 'containers/Home/PostFormContext';
 import { BaseEmoji } from 'emoji-mart';
 import React from 'react';
 import { IoMdImages } from 'react-icons/io';
 import { MdCameraAlt, MdOutlineEmojiEmotions } from 'react-icons/md';
+import usePostForm from '../../usePostForm';
 import PostImage from '../PostImage';
 import PostText from '../PostText';
 
@@ -31,6 +33,16 @@ const Main: React.FC<Props> = ({
   handleSelect,
   openEmoji,
 }) => {
+  const { userAuth, status, images } = usePostFormContext();
+  const { createPost } = usePostForm();
+
+  const handleCreatePost = () => {
+    createPost({
+      images: images || [],
+      content: status,
+    });
+  };
+
   return (
     <div>
       {/* User */}
@@ -39,11 +51,13 @@ const Main: React.FC<Props> = ({
           href='/'
           size={42}
           style={{ minWidth: 42 }}
-          src='https://images.unsplash.com/photo-1644982647531-daff2c7383f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60'
+          src={userAuth?.avatar || ''}
           alt='avatar'
         />
         <div>
-          <span className='font-medium text-neutral-700'>Luong Dao</span>
+          <span className='font-medium text-neutral-700'>
+            {userAuth?.username}
+          </span>
         </div>
       </div>
 
@@ -87,6 +101,7 @@ const Main: React.FC<Props> = ({
           fullWidth
           size='sm'
           className='bg-blue-500 text-lg font-semibold hover:bg-blue-600 rounded-lg'
+          clickHandler={handleCreatePost}
         >
           Post
         </ButtonPrimary>

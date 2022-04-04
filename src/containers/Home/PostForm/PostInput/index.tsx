@@ -6,7 +6,7 @@ interface Props {
 }
 
 const PostInput: React.FC<Props> = ({ openModal }) => {
-  const { status } = usePostFormContext();
+  const { status, userAuth } = usePostFormContext();
   let trimStatus = status?.trim() || '';
 
   return (
@@ -18,7 +18,7 @@ const PostInput: React.FC<Props> = ({ openModal }) => {
         href='/'
         size={55}
         style={{ minWidth: 40 }}
-        src='https://images.unsplash.com/photo-1644982647531-daff2c7383f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60'
+        src={userAuth?.avatar || ''}
         alt='avatar'
       />
 
@@ -31,7 +31,7 @@ const PostInput: React.FC<Props> = ({ openModal }) => {
           ? trimStatus.length > 40
             ? `${trimStatus.slice(0, 40)}...`
             : trimStatus
-          : 'luongdao, what are you thinking?'}
+          : `${userAuth?.username}, what are you thinking?`}
       </button>
     </div>
   );

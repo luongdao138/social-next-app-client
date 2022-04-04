@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdSearch, MdClose } from 'react-icons/md';
 import useSearch from 'utils/hooks/useSearch';
 
@@ -28,6 +28,12 @@ const Search: React.FC<Props> = ({ onSearch, user_id }) => {
 
     onSearch(value);
   };
+
+  useEffect(() => {
+    return () => {
+      onSearch('');
+    };
+  }, []);
 
   return (
     <div className='relative'>

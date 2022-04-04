@@ -6,7 +6,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { FileItem } from 'services/postForm.service';
+import { UserAuth } from 'services/auth.service';
+import { FileItem } from 'services/timeline.service';
+import { getUserAuth } from 'store/auth/selectors';
+import { useAppSelector } from 'store/hooks';
 
 export enum TABS {
   MAIN = 'MAIN',
@@ -33,12 +36,15 @@ interface ContextState {
   updateFile: (id: string, data: Partial<FileItem>) => void;
   handleNextPhoto: () => void;
   handlePrevPhoto: () => void;
+  userAuth: UserAuth | undefined;
+  resetPostForm: () => void;
 }
 
 const PostFormContext = React.createContext<ContextState>({} as ContextState);
 
 const PostContextProvider: React.FC = ({ children }) => {
   const postTextRef = useRef<HTMLTextAreaElement>(null);
+  const userAuth = useAppSelector(getUserAuth);
   const [tab, setTab] = useState<TABS>(TABS.MAIN);
   const [status, setStatus] = useState<string>('');
   const [images, setImages] = useState<FileItem[]>([]);
@@ -110,6 +116,13 @@ const PostContextProvider: React.FC = ({ children }) => {
     }
   };
 
+  const resetPostForm = useCallback(() => {
+    setStatus('');
+    setImages([]);
+    setTab(TABS.MAIN);
+    setSelectedPhoto(undefined);
+  }, []);
+
   useEffect(() => {
     return () => {
       console.log('Component unmount!');
@@ -134,6 +147,8 @@ const PostContextProvider: React.FC = ({ children }) => {
         selectedPhoto,
         handleNextPhoto,
         handlePrevPhoto,
+        userAuth,
+        resetPostForm,
       }}
     >
       {children}

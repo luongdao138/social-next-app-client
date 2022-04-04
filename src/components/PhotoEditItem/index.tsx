@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdClose, MdEdit } from 'react-icons/md';
-import { FileItem } from 'services/postForm.service';
+import { FileItem } from 'services/timeline.service';
 import classes from './PhotoEditItem.module.css';
 
 interface Props {
