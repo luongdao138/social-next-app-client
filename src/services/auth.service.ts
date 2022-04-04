@@ -18,6 +18,7 @@ export interface UserAuth {
   followers?: string[];
   following?: string[];
   verified?: boolean;
+  cover_picture?: string;
 }
 
 export interface UserLoginParams {

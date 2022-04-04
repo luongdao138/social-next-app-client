@@ -1,13 +1,14 @@
-export const dataURLtoFile = (dataurl: string, filename: string): File => {
-  const arr = dataurl.split(',');
-  const mime = arr[0].match(/:(.*?);/)?.[1];
-  // const bstr = atob(arr[1]);
-  const buff = Buffer.from(arr[1], 'base64');
-  const bstr = buff.toString('base64');
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
+export const dataURLtoFile = async (dataurl: string, filename: string): Promise<File> => {
+  const res: Response = await fetch(dataurl);
+  const blob = await res.blob();
+  const file = new File([blob], filename, { type: 'image/jpg' });
 
-  while (n--) u8arr[n] = bstr.charCodeAt(n);
+  return file;
+};
 
-  return new File([u8arr], filename, { type: mime });
+export const createPreviewUrl = (file: File) => {
+  return URL.createObjectURL(file);
+};
+export const destroyPreviewUrl = (url: string) => {
+  return URL.revokeObjectURL(url);
 };

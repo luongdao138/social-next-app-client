@@ -11,11 +11,15 @@ export const upload = async (
   uploadListener?: (p: number) => void
 ): Promise<UploadImageResponse> => {
   const formData = new FormData();
-  console.log(process.env.NEXT_PUBLIC_CLOUDINARY_NAME);
-  console.log(process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
   formData.append('file', file);
-  formData.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_NAME as string);
-  formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string);
+  formData.append(
+    'cloud_name',
+    process.env.NEXT_PUBLIC_CLOUDINARY_NAME as string
+  );
+  formData.append(
+    'upload_preset',
+    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string
+  );
 
   const res = await axios.post<UploadImageResponse>(
     'https://api.cloudinary.com/v1_1/luongdao/image/upload',
@@ -24,7 +28,9 @@ export const upload = async (
       onUploadProgress: (progressEvent) => {
         if (uploadListener) {
           console.log(progressEvent);
-          uploadListener(Math.round((progressEvent.loaded / progressEvent.total) * 100));
+          uploadListener(
+            Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          );
         }
       },
     }

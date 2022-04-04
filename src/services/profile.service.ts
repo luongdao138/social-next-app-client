@@ -21,6 +21,7 @@ export interface UserProfile {
   follower_count: number;
   following_count: number;
   is_own?: boolean;
+  cover_picture?: string;
 }
 
 export interface UserFollow {
@@ -41,6 +42,7 @@ export interface EditProfileParams {
   story?: string;
   gender?: UserGender;
   avatar?: string;
+  cover_picture?: string;
 }
 
 export interface FollowUserParams {

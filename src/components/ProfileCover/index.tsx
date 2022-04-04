@@ -1,63 +1,16 @@
-import Avatar from 'components/Avatar';
-import { useState } from 'react';
-import { MdCameraAlt } from 'react-icons/md';
-import CoverImageAction from './CoverImageAction';
+import { MEDIA_QUERY } from 'constants/mediaQuery.constant';
+import React from 'react';
+import useMediaQuery from 'utils/hooks/useMediaQuery';
 
-interface Props {
-  avatar: string;
-  is_own?: boolean;
-  openCropper: () => void;
-  removeAvatar: () => void;
-}
-
-const ProfileCover: React.FC<Props> = ({ avatar, is_own, openCropper, removeAvatar }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [isFocus, setIsFocus] = useState<boolean>(false);
-
-  const handleToggleMenu = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const handleOpenMenu = () => {
-    if (!open) {
-      setOpen(true);
-    }
-  };
-
-  if (!is_own) {
-    return (
-      <div className='relative'>
-        <Avatar size={180} src={avatar} isLink={false} style={{ minWidth: 180 }} />
-      </div>
-    );
-  }
-
+const ProfileCover = () => {
+  const matchXs = useMediaQuery(MEDIA_QUERY.xs);
   return (
-    <div className='relative'>
-      <Avatar
-        size={180}
-        src={avatar}
-        className={`cursor-pointer hover:opacity-90 transition-all ${isFocus ? 'scale-95' : ''} `}
-        isLink={false}
-        style={{ minWidth: 180 }}
-        clickHandler={handleOpenMenu}
-        onMouseDown={() => setIsFocus(true)}
-        onMouseUp={() => setIsFocus(false)}
-        onMouseLeave={() => setIsFocus(false)}
+    <div className='w-full'>
+      <img
+        src='https://images.unsplash.com/reserve/vNE8214NS9GOvXOy7DCu_DSC_0266.JPG?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80'
+        alt='cover'
+        className={`w-full ${matchXs ? 'max-h-80' : 'max-h-72'} max-h-80 object-cover`}
       />
-      <div
-        className='w-10 h-10 flex bg-neutral-600 cursor-pointer rounded-full absolute bottom-0 right-0 -translate-x-2 -translate-y-2 hover:bg-neutral-500 transition-colors'
-        onClick={openCropper}
-      >
-        <MdCameraAlt className='m-auto text-white text-2xl' />
-      </div>
-      {open ? (
-        <CoverImageAction
-          removeAvatar={removeAvatar}
-          openCropper={openCropper}
-          toggle={handleToggleMenu}
-        />
-      ) : null}
     </div>
   );
 };

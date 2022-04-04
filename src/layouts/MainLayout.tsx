@@ -26,7 +26,7 @@ const MainLayout: React.FC<Props> = ({ children, loginRequired }) => {
       <FullScreenLoader open />
     </>
   ) : (
-    <div className='w-full mx-auto max-w-6xl'>
+    <div className='w-full mx-auto'>
       <Header />
       {children}
     </div>

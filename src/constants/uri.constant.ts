@@ -22,4 +22,8 @@ export const URI = {
 
   // image
   IMAGE_UPLOAD: `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+
+  // post
+  CREATE_POST: '/posts',
+  CREATE_IMAGE: '/postImages',
 };
